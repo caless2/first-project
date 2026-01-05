@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMG Neuroanatomy Reference</title>
+    <style>
+        :root {
+            --primary: #1a365d;
+            --primary-light: #2c5282;
+            --secondary: #2d3748;
+            --accent: #3182ce;
+            --accent-light: #63b3ed;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --text: #1a202c;
+            --text-muted: #718096;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .extremity-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .extremity-tab {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: var(--card-bg);
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+            box-shadow: var(--shadow);
+        }
+
+        .extremity-tab:hover {
+            background: var(--border);
+        }
+
+        .extremity-tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr 1fr;
+            }
+            .diagram-section {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .diagram-section {
+                grid-column: span 1;
+            }
+        }
+
+        .section {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--secondary);
+            color: white;
+            padding: 0.875rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-content {
+            padding: 1rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .item {
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            background: var(--bg);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .item:hover {
+            background: #edf2f7;
+            transform: translateX(4px);
+        }
+
+        .item.selected {
+            border-color: var(--accent);
+            background: #ebf8ff;
+        }
+
+        .item.highlighted {
+            border-color: var(--success);
+            background: #f0fff4;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .item-details {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .root-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        .nerve-badge {
+            display: inline-block;
+            background: var(--success);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .plexus-badge {
+            display: inline-block;
+            background: var(--warning);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.25rem;
+        }
+
+        .diagram-section {
+            grid-row: span 2;
+        }
+
+        .diagram-container {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .diagram-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .plexus-diagram {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+        }
+
+        .plexus-diagram .root { fill: var(--accent); }
+        .plexus-diagram .trunk { fill: #805ad5; }
+        .plexus-diagram .division { fill: #d69e2e; }
+        .plexus-diagram .cord { fill: #38a169; }
+        .plexus-diagram .nerve { fill: #e53e3e; }
+        .plexus-diagram text { font-size: 10px; fill: var(--text); font-weight: 500; }
+        .plexus-diagram .label { font-size: 8px; fill: white; }
+        .plexus-diagram .connector { stroke: #a0aec0; stroke-width: 2; fill: none; }
+
+        .diagram-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.8rem;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .detail-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+            padding: 1.25rem 2rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 100;
+            border-top: 3px solid var(--accent);
+        }
+
+        .detail-panel.visible {
+            transform: translateY(0);
+        }
+
+        .detail-panel-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .detail-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-info {
+            flex: 1;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .detail-item {
+            background: var(--bg);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .detail-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .muscle-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+        }
+
+        .muscle-tag {
+            background: var(--accent-light);
+            color: var(--primary);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .muscle-tag:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .close-panel {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            padding: 0.5rem;
+            line-height: 1;
+        }
+
+        .close-panel:hover {
+            color: var(--text);
+        }
+
+        .instructions {
+            background: #ebf8ff;
+            border: 1px solid var(--accent-light);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--primary-light);
+        }
+
+        .instructions strong {
+            color: var(--primary);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Scrollbar styling */
+        .section-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .section-content::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        .section-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
+        .section-content::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>EMG Neuroanatomy Reference</h1>
+        <p>Quick clinical reference for muscle innervation and nerve anatomy</p>
+    </header>
+
+    <div class="container">
+        <div class="instructions">
+            <strong>Quick Guide:</strong> Click on any muscle to see its innervation details, or click on a nerve to see all muscles it supplies. Related items will be highlighted.
+        </div>
+
+        <div class="extremity-tabs">
+            <button class="extremity-tab active" data-extremity="upper">Upper Extremity</button>
+            <button class="extremity-tab" data-extremity="lower">Lower Extremity</button>
+        </div>
+
+        <!-- Upper Extremity Content -->
+        <div id="upper-content" class="main-content">
+            <div class="section">
+                <div class="section-header">Muscles</div>
+                <div class="section-content" id="upper-muscles"></div>
+            </div>
+            <div class="section">
+                <div class="section-header">Nerves</div>
+                <div class="section-content" id="upper-nerves"></div>
+            </div>
+            <div class="section diagram-section">
+                <div class="section-header">Brachial Plexus</div>
+                <div class="diagram-container">
+                    <svg class="plexus-diagram" viewBox="0 0 400 450" id="brachial-plexus-svg">
+                        <!-- Roots -->
+                        <text x="30" y="50">C5</text>
+                        <circle class="root" cx="60" cy="45" r="12"/>
+                        <text x="30" y="90">C6</text>
+                        <circle class="root" cx="60" cy="85" r="12"/>
+                        <text x="30" y="130">C7</text>
+                        <circle class="root" cx="60" cy="125" r="12"/>
+                        <text x="30" y="170">C8</text>
+                        <circle class="root" cx="60" cy="165" r="12"/>
+                        <text x="30" y="210">T1</text>
+                        <circle class="root" cx="60" cy="205" r="12"/>
+
+                        <!-- Trunks -->
+                        <path class="connector" d="M72,45 Q100,45 120,65"/>
+                        <path class="connector" d="M72,85 Q100,85 120,65"/>
+                        <rect class="trunk" x="120" y="50" width="50" height="30" rx="5"/>
+                        <text class="label" x="130" y="70">Upper</text>
+
+                        <path class="connector" d="M72,125 L120,125"/>
+                        <rect class="trunk" x="120" y="110" width="50" height="30" rx="5"/>
+                        <text class="label" x="127" y="130">Middle</text>
+
+                        <path class="connector" d="M72,165 Q100,165 120,185"/>
+                        <path class="connector" d="M72,205 Q100,205 120,185"/>
+                        <rect class="trunk" x="120" y="170" width="50" height="30" rx="5"/>
+                        <text class="label" x="130" y="190">Lower</text>
+
+                        <!-- Divisions label -->
+                        <text x="195" y="30" style="font-size: 9px; fill: #805ad5;">Divisions</text>
+
+                        <!-- Anterior Divisions -->
+                        <path class="connector" d="M170,65 Q190,65 200,85"/>
+                        <circle class="division" cx="200" cy="85" r="8"/>
+
+                        <path class="connector" d="M170,125 L200,125"/>
+                        <circle class="division" cx="200" cy="125" r="8"/>
+
+                        <path class="connector" d="M170,185 Q190,185 200,165"/>
+                        <circle class="division" cx="200" cy="165" r="8"/>
+
+                        <!-- Posterior Divisions -->
+                        <path class="connector" d="M170,65 Q190,80 210,95"/>
+                        <circle class="division" cx="210" cy="95" r="6"/>
+
+                        <path class="connector" d="M170,125 Q195,135 215,140"/>
+                        <circle class="division" cx="215" cy="140" r="6"/>
+
+                        <path class="connector" d="M170,185 Q195,175 215,170"/>
+                        <circle class="division" cx="215" cy="170" r="6"/>
+
+                        <!-- Cords -->
+                        <path class="connector" d="M208,85 Q230,100 240,120"/>
+                        <path class="connector" d="M208,125 Q230,125 240,130"/>
+                        <rect class="cord" x="240" y="115" width="45" height="30" rx="5"/>
+                        <text class="label" x="247" y="135">Lateral</text>
+
+                        <path class="connector" d="M216,95 Q250,110 270,160"/>
+                        <path class="connector" d="M221,140 Q260,155 270,170"/>
+                        <path class="connector" d="M221,170 Q260,180 270,180"/>
+                        <rect class="cord" x="255" y="165" width="55" height="30" rx="5"/>
+                        <text class="label" x="259" y="185">Posterior</text>
+
+                        <path class="connector" d="M208,165 Q230,180 240,210"/>
+                        <rect class="cord" x="240" y="205" width="45" height="30" rx="5"/>
+                        <text class="label" x="247" y="225">Medial</text>
+
+                        <!-- Terminal Nerves -->
+                        <path class="connector" d="M285,130 Q310,160 320,200"/>
+                        <rect class="nerve" x="310" y="200" width="80" height="22" rx="4"/>
+                        <text class="label" x="316" y="215">Musculocutaneous</text>
+
+                        <path class="connector" d="M285,145 Q340,200 340,250"/>
+                        <path class="connector" d="M285,210 Q320,230 340,250"/>
+                        <rect class="nerve" x="310" y="250" width="55" height="22" rx="4"/>
+                        <text class="label" x="320" y="265">Median</text>
+
+                        <path class="connector" d="M310,180 Q340,220 350,290"/>
+                        <rect class="nerve" x="320" y="290" width="55" height="22" rx="4"/>
+                        <text class="label" x="330" y="305">Radial</text>
+
+                        <path class="connector" d="M285,220 Q310,260 320,330"/>
+                        <rect class="nerve" x="300" y="330" width="50" height="22" rx="4"/>
+                        <text class="label" x="312" y="345">Ulnar</text>
+
+                        <!-- Additional branches -->
+                        <path class="connector" d="M145,50 Q160,30 180,30"/>
+                        <rect class="nerve" x="180" y="20" width="85" height="18" rx="3"/>
+                        <text class="label" x="186" y="33" style="font-size: 7px;">Suprascapular (C5-6)</text>
+
+                        <path class="connector" d="M145,65 Q160,45 180,50"/>
+                        <rect class="nerve" x="180" y="42" width="100" height="18" rx="3"/>
+                        <text class="label" x="184" y="55" style="font-size: 7px;">Long Thoracic (C5-7)</text>
+
+                        <!-- Axillary from posterior cord -->
+                        <path class="connector" d="M282,195 Q300,230 320,370"/>
+                        <rect class="nerve" x="300" y="370" width="55" height="22" rx="4"/>
+                        <text class="label" x="310" y="385">Axillary</text>
+                    </svg>
+                    <div class="diagram-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--accent);"></div>
+                            <span>Roots</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #805ad5;"></div>
+                            <span>Trunks</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #d69e2e;"></div>
+                            <span>Divisions</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #38a169;"></div>
+                            <span>Cords</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #e53e3e;"></div>
+                            <span>Nerves</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lower Extremity Content -->
+        <div id="lower-content" class="main-content hidden">
+            <div class="section">
+                <div class="section-header">Muscles</div>
+                <div class="section-content" id="lower-muscles"></div>
+            </div>
+            <div class="section">
+                <div class="section-header">Nerves</div>
+                <div class="section-content" id="lower-nerves"></div>
+            </div>
+            <div class="section diagram-section">
+                <div class="section-header">Lumbosacral Plexus</div>
+                <div class="diagram-container">
+                    <svg class="plexus-diagram" viewBox="0 0 400 480" id="lumbosacral-plexus-svg">
+                        <!-- Lumbar Plexus Roots -->
+                        <text x="25" y="35">L1</text>
+                        <circle class="root" cx="55" cy="30" r="12"/>
+                        <text x="25" y="70">L2</text>
+                        <circle class="root" cx="55" cy="65" r="12"/>
+                        <text x="25" y="105">L3</text>
+                        <circle class="root" cx="55" cy="100" r="12"/>
+                        <text x="25" y="140">L4</text>
+                        <circle class="root" cx="55" cy="135" r="12"/>
+                        <text x="25" y="175">L5</text>
+                        <circle class="root" cx="55" cy="170" r="12"/>
+
+                        <!-- Sacral Roots -->
+                        <text x="25" y="220">S1</text>
+                        <circle class="root" cx="55" cy="215" r="12"/>
+                        <text x="25" y="255">S2</text>
+                        <circle class="root" cx="55" cy="250" r="12"/>
+                        <text x="25" y="290">S3</text>
+                        <circle class="root" cx="55" cy="285" r="12"/>
+
+                        <!-- Lumbar Plexus label -->
+                        <text x="100" y="15" style="font-size: 11px; fill: #805ad5; font-weight: 600;">Lumbar Plexus</text>
+
+                        <!-- Iliohypogastric & Ilioinguinal -->
+                        <path class="connector" d="M67,30 Q100,30 130,35"/>
+                        <rect class="nerve" x="130" y="22" width="95" height="18" rx="3"/>
+                        <text class="label" x="138" y="35" style="font-size: 7px;">Iliohypogastric (L1)</text>
+
+                        <path class="connector" d="M67,30 Q100,45 130,55"/>
+                        <rect class="nerve" x="130" y="45" width="85" height="18" rx="3"/>
+                        <text class="label" x="140" y="58" style="font-size: 7px;">Ilioinguinal (L1)</text>
+
+                        <!-- Genitofemoral -->
+                        <path class="connector" d="M67,65 Q100,60 130,68"/>
+                        <rect class="nerve" x="130" y="60" width="90" height="18" rx="3"/>
+                        <text class="label" x="138" y="73" style="font-size: 7px;">Genitofemoral (L1-2)</text>
+
+                        <!-- Lateral Femoral Cutaneous -->
+                        <path class="connector" d="M67,65 Q90,75 110,85"/>
+                        <path class="connector" d="M67,100 Q90,90 110,85"/>
+                        <rect class="nerve" x="110" y="80" width="115" height="18" rx="3"/>
+                        <text class="label" x="115" y="93" style="font-size: 7px;">Lat Fem Cutaneous (L2-3)</text>
+
+                        <!-- Femoral Nerve -->
+                        <path class="connector" d="M67,65 Q90,100 120,120"/>
+                        <path class="connector" d="M67,100 Q90,110 120,120"/>
+                        <path class="connector" d="M67,135 Q90,125 120,120"/>
+                        <rect class="cord" x="120" y="105" width="60" height="30" rx="5"/>
+                        <text class="label" x="125" y="125">Femoral</text>
+
+                        <path class="connector" d="M180,120 Q220,120 250,140"/>
+                        <rect class="nerve" x="250" y="125" width="80" height="25" rx="4"/>
+                        <text class="label" x="258" y="142">Femoral N.</text>
+                        <text class="label" x="268" y="152" style="font-size: 7px;">(L2-L4)</text>
+
+                        <!-- Obturator Nerve -->
+                        <path class="connector" d="M67,100 Q90,140 120,155"/>
+                        <path class="connector" d="M67,135 Q90,150 120,155"/>
+                        <rect class="cord" x="120" y="145" width="65" height="25" rx="5"/>
+                        <text class="label" x="125" y="162">Obturator</text>
+
+                        <path class="connector" d="M185,157 Q220,157 250,175"/>
+                        <rect class="nerve" x="250" y="160" width="85" height="25" rx="4"/>
+                        <text class="label" x="258" y="177">Obturator N.</text>
+                        <text class="label" x="273" y="187" style="font-size: 7px;">(L2-L4)</text>
+
+                        <!-- Sacral Plexus label -->
+                        <text x="100" y="210" style="font-size: 11px; fill: #805ad5; font-weight: 600;">Sacral Plexus</text>
+
+                        <!-- Lumbosacral Trunk -->
+                        <path class="connector" d="M67,135 Q85,180 100,200"/>
+                        <path class="connector" d="M67,170 Q85,190 100,200"/>
+                        <rect class="trunk" x="85" y="195" width="75" height="22" rx="4"/>
+                        <text class="label" x="88" y="210" style="font-size: 7px;">Lumbosacral Trunk</text>
+
+                        <!-- Sciatic Nerve formation -->
+                        <path class="connector" d="M160,206 Q180,240 195,270"/>
+                        <path class="connector" d="M67,215 Q130,240 195,270"/>
+                        <path class="connector" d="M67,250 Q130,260 195,270"/>
+                        <rect class="cord" x="180" y="260" width="55" height="30" rx="5"/>
+                        <text class="label" x="190" y="280">Sciatic</text>
+
+                        <!-- Superior Gluteal -->
+                        <path class="connector" d="M100,217 Q150,220 180,230"/>
+                        <rect class="nerve" x="180" y="220" width="100" height="20" rx="3"/>
+                        <text class="label" x="188" y="234" style="font-size: 7px;">Sup. Gluteal (L4-S1)</text>
+
+                        <!-- Inferior Gluteal -->
+                        <path class="connector" d="M67,215 Q120,235 180,245"/>
+                        <rect class="nerve" x="180" y="238" width="95" height="18" rx="3"/>
+                        <text class="label" x="188" y="251" style="font-size: 7px;">Inf. Gluteal (L5-S2)</text>
+
+                        <!-- Sciatic splits into Tibial and Common Peroneal -->
+                        <path class="connector" d="M235,275 Q260,310 270,340"/>
+                        <rect class="nerve" x="250" y="335" width="80" height="25" rx="4"/>
+                        <text class="label" x="260" y="352">Tibial N.</text>
+                        <text class="label" x="265" y="362" style="font-size: 7px;">(L4-S3)</text>
+
+                        <path class="connector" d="M235,290 Q290,320 310,355"/>
+                        <rect class="nerve" x="290" y="370" width="100" height="25" rx="4"/>
+                        <text class="label" x="295" y="387">Common Peroneal</text>
+                        <text class="label" x="320" y="397" style="font-size: 7px;">(L4-S2)</text>
+
+                        <!-- Peroneal branches -->
+                        <path class="connector" d="M340,395 Q350,420 345,440"/>
+                        <rect class="nerve" x="305" y="435" width="85" height="20" rx="3"/>
+                        <text class="label" x="310" y="449" style="font-size: 7px;">Deep Peroneal (L4-S1)</text>
+
+                        <path class="connector" d="M390,382 Q395,410 390,435"/>
+                        <rect class="nerve" x="345" y="455" width="95" height="18" rx="3"/>
+                        <text class="label" x="348" y="468" style="font-size: 7px;">Superficial Peroneal (L5-S1)</text>
+
+                        <!-- Pudendal -->
+                        <path class="connector" d="M67,250 Q90,290 120,310"/>
+                        <path class="connector" d="M67,285 Q90,300 120,310"/>
+                        <rect class="nerve" x="120" y="300" width="80" height="22" rx="4"/>
+                        <text class="label" x="128" y="315">Pudendal</text>
+                        <text class="label" x="133" y="323" style="font-size: 7px;">(S2-S4)</text>
+                    </svg>
+                    <div class="diagram-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--accent);"></div>
+                            <span>Roots</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #805ad5;"></div>
+                            <span>Trunks</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #38a169;"></div>
+                            <span>Major Branches</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #e53e3e;"></div>
+                            <span>Terminal Nerves</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detail Panel -->
+    <div class="detail-panel" id="detail-panel">
+        <div class="detail-panel-content">
+            <div class="detail-info" id="detail-info"></div>
+            <button class="close-panel" onclick="closeDetailPanel()">×</button>
+        </div>
+    </div>
+
+    <script>
+        // Comprehensive EMG Neuroanatomy Data
+        const neuroanatomyData = {
+            upper: {
+                muscles: [
+                    {
+                        name: "Deltoid",
+                        nerve: "Axillary",
+                        roots: ["C5", "C6"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Biceps Brachii",
+                        nerve: "Musculocutaneous",
+                        roots: ["C5", "C6"],
+                        plexus: "Lateral cord"
+                    },
+                    {
+                        name: "Brachialis",
+                        nerve: "Musculocutaneous",
+                        roots: ["C5", "C6"],
+                        plexus: "Lateral cord"
+                    },
+                    {
+                        name: "Brachioradialis",
+                        nerve: "Radial",
+                        roots: ["C5", "C6"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Triceps Brachii",
+                        nerve: "Radial",
+                        roots: ["C6", "C7", "C8"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Extensor Carpi Radialis Longus",
+                        nerve: "Radial",
+                        roots: ["C6", "C7"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Extensor Carpi Radialis Brevis",
+                        nerve: "Radial (PIN)",
+                        roots: ["C7", "C8"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Extensor Digitorum Communis",
+                        nerve: "Radial (PIN)",
+                        roots: ["C7", "C8"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Extensor Carpi Ulnaris",
+                        nerve: "Radial (PIN)",
+                        roots: ["C7", "C8"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Supinator",
+                        nerve: "Radial (PIN)",
+                        roots: ["C5", "C6"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Pronator Teres",
+                        nerve: "Median",
+                        roots: ["C6", "C7"],
+                        plexus: "Lateral cord → Median"
+                    },
+                    {
+                        name: "Flexor Carpi Radialis",
+                        nerve: "Median",
+                        roots: ["C6", "C7"],
+                        plexus: "Lateral cord → Median"
+                    },
+                    {
+                        name: "Flexor Digitorum Superficialis",
+                        nerve: "Median",
+                        roots: ["C7", "C8", "T1"],
+                        plexus: "Medial & Lateral cords → Median"
+                    },
+                    {
+                        name: "Flexor Pollicis Longus",
+                        nerve: "Median (AIN)",
+                        roots: ["C7", "C8"],
+                        plexus: "Medial & Lateral cords → Median"
+                    },
+                    {
+                        name: "Flexor Digitorum Profundus I-II",
+                        nerve: "Median (AIN)",
+                        roots: ["C7", "C8"],
+                        plexus: "Medial & Lateral cords → Median"
+                    },
+                    {
+                        name: "Pronator Quadratus",
+                        nerve: "Median (AIN)",
+                        roots: ["C7", "C8"],
+                        plexus: "Medial & Lateral cords → Median"
+                    },
+                    {
+                        name: "Abductor Pollicis Brevis",
+                        nerve: "Median",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord → Median"
+                    },
+                    {
+                        name: "Opponens Pollicis",
+                        nerve: "Median",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord → Median"
+                    },
+                    {
+                        name: "Lumbricals I-II",
+                        nerve: "Median",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord → Median"
+                    },
+                    {
+                        name: "Flexor Carpi Ulnaris",
+                        nerve: "Ulnar",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    },
+                    {
+                        name: "Flexor Digitorum Profundus III-IV",
+                        nerve: "Ulnar",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    },
+                    {
+                        name: "First Dorsal Interosseous",
+                        nerve: "Ulnar",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    },
+                    {
+                        name: "Abductor Digiti Minimi (Hand)",
+                        nerve: "Ulnar",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    },
+                    {
+                        name: "Adductor Pollicis",
+                        nerve: "Ulnar",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    },
+                    {
+                        name: "Lumbricals III-IV",
+                        nerve: "Ulnar",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    },
+                    {
+                        name: "Interossei (Palmar & Dorsal)",
+                        nerve: "Ulnar",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    },
+                    {
+                        name: "Supraspinatus",
+                        nerve: "Suprascapular",
+                        roots: ["C5", "C6"],
+                        plexus: "Upper trunk"
+                    },
+                    {
+                        name: "Infraspinatus",
+                        nerve: "Suprascapular",
+                        roots: ["C5", "C6"],
+                        plexus: "Upper trunk"
+                    },
+                    {
+                        name: "Rhomboids",
+                        nerve: "Dorsal Scapular",
+                        roots: ["C5"],
+                        plexus: "Root (C5)"
+                    },
+                    {
+                        name: "Serratus Anterior",
+                        nerve: "Long Thoracic",
+                        roots: ["C5", "C6", "C7"],
+                        plexus: "Roots (C5-C7)"
+                    },
+                    {
+                        name: "Latissimus Dorsi",
+                        nerve: "Thoracodorsal",
+                        roots: ["C6", "C7", "C8"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Teres Major",
+                        nerve: "Subscapular (Lower)",
+                        roots: ["C5", "C6"],
+                        plexus: "Posterior cord"
+                    },
+                    {
+                        name: "Pectoralis Major (Clavicular)",
+                        nerve: "Lateral Pectoral",
+                        roots: ["C5", "C6", "C7"],
+                        plexus: "Lateral cord"
+                    },
+                    {
+                        name: "Pectoralis Major (Sternal)",
+                        nerve: "Medial Pectoral",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord"
+                    }
+                ],
+                nerves: [
+                    {
+                        name: "Median Nerve",
+                        roots: ["C6", "C7", "C8", "T1"],
+                        plexus: "Lateral cord (C6-C7) + Medial cord (C8-T1) → joins to form median nerve",
+                        muscles: ["Pronator Teres", "Flexor Carpi Radialis", "Flexor Digitorum Superficialis", "Flexor Pollicis Longus", "Flexor Digitorum Profundus I-II", "Pronator Quadratus", "Abductor Pollicis Brevis", "Opponens Pollicis", "Lumbricals I-II"]
+                    },
+                    {
+                        name: "Ulnar Nerve",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord",
+                        muscles: ["Flexor Carpi Ulnaris", "Flexor Digitorum Profundus III-IV", "First Dorsal Interosseous", "Abductor Digiti Minimi (Hand)", "Adductor Pollicis", "Lumbricals III-IV", "Interossei (Palmar & Dorsal)"]
+                    },
+                    {
+                        name: "Radial Nerve",
+                        roots: ["C5", "C6", "C7", "C8"],
+                        plexus: "Posterior cord",
+                        muscles: ["Triceps Brachii", "Brachioradialis", "Extensor Carpi Radialis Longus", "Extensor Carpi Radialis Brevis", "Extensor Digitorum Communis", "Extensor Carpi Ulnaris", "Supinator"]
+                    },
+                    {
+                        name: "Musculocutaneous Nerve",
+                        roots: ["C5", "C6", "C7"],
+                        plexus: "Lateral cord",
+                        muscles: ["Biceps Brachii", "Brachialis"]
+                    },
+                    {
+                        name: "Axillary Nerve",
+                        roots: ["C5", "C6"],
+                        plexus: "Posterior cord",
+                        muscles: ["Deltoid"]
+                    },
+                    {
+                        name: "Suprascapular Nerve",
+                        roots: ["C5", "C6"],
+                        plexus: "Upper trunk (direct branch)",
+                        muscles: ["Supraspinatus", "Infraspinatus"]
+                    },
+                    {
+                        name: "Long Thoracic Nerve",
+                        roots: ["C5", "C6", "C7"],
+                        plexus: "Direct from roots (C5-C7)",
+                        muscles: ["Serratus Anterior"]
+                    },
+                    {
+                        name: "Thoracodorsal Nerve",
+                        roots: ["C6", "C7", "C8"],
+                        plexus: "Posterior cord",
+                        muscles: ["Latissimus Dorsi"]
+                    },
+                    {
+                        name: "Dorsal Scapular Nerve",
+                        roots: ["C5"],
+                        plexus: "Direct from root (C5)",
+                        muscles: ["Rhomboids"]
+                    },
+                    {
+                        name: "Lateral Pectoral Nerve",
+                        roots: ["C5", "C6", "C7"],
+                        plexus: "Lateral cord",
+                        muscles: ["Pectoralis Major (Clavicular)"]
+                    },
+                    {
+                        name: "Medial Pectoral Nerve",
+                        roots: ["C8", "T1"],
+                        plexus: "Medial cord",
+                        muscles: ["Pectoralis Major (Sternal)"]
+                    }
+                ]
+            },
+            lower: {
+                muscles: [
+                    {
+                        name: "Iliopsoas",
+                        nerve: "Femoral + Direct branches",
+                        roots: ["L1", "L2", "L3"],
+                        plexus: "Lumbar plexus"
+                    },
+                    {
+                        name: "Quadriceps Femoris",
+                        nerve: "Femoral",
+                        roots: ["L2", "L3", "L4"],
+                        plexus: "Lumbar plexus (posterior divisions)"
+                    },
+                    {
+                        name: "Sartorius",
+                        nerve: "Femoral",
+                        roots: ["L2", "L3"],
+                        plexus: "Lumbar plexus"
+                    },
+                    {
+                        name: "Adductor Longus",
+                        nerve: "Obturator",
+                        roots: ["L2", "L3", "L4"],
+                        plexus: "Lumbar plexus (anterior divisions)"
+                    },
+                    {
+                        name: "Adductor Magnus (Anterior)",
+                        nerve: "Obturator",
+                        roots: ["L2", "L3", "L4"],
+                        plexus: "Lumbar plexus"
+                    },
+                    {
+                        name: "Adductor Magnus (Posterior)",
+                        nerve: "Sciatic (Tibial portion)",
+                        roots: ["L4", "L5", "S1"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Gracilis",
+                        nerve: "Obturator",
+                        roots: ["L2", "L3"],
+                        plexus: "Lumbar plexus"
+                    },
+                    {
+                        name: "Gluteus Maximus",
+                        nerve: "Inferior Gluteal",
+                        roots: ["L5", "S1", "S2"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Gluteus Medius",
+                        nerve: "Superior Gluteal",
+                        roots: ["L4", "L5", "S1"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Gluteus Minimus",
+                        nerve: "Superior Gluteal",
+                        roots: ["L4", "L5", "S1"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Tensor Fasciae Latae",
+                        nerve: "Superior Gluteal",
+                        roots: ["L4", "L5", "S1"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Biceps Femoris (Long Head)",
+                        nerve: "Sciatic (Tibial portion)",
+                        roots: ["L5", "S1", "S2"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Biceps Femoris (Short Head)",
+                        nerve: "Sciatic (Peroneal portion)",
+                        roots: ["L5", "S1", "S2"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Semitendinosus",
+                        nerve: "Sciatic (Tibial portion)",
+                        roots: ["L5", "S1", "S2"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Semimembranosus",
+                        nerve: "Sciatic (Tibial portion)",
+                        roots: ["L5", "S1", "S2"],
+                        plexus: "Sacral plexus"
+                    },
+                    {
+                        name: "Gastrocnemius",
+                        nerve: "Tibial",
+                        roots: ["S1", "S2"],
+                        plexus: "Sacral plexus → Sciatic → Tibial"
+                    },
+                    {
+                        name: "Soleus",
+                        nerve: "Tibial",
+                        roots: ["S1", "S2"],
+                        plexus: "Sacral plexus → Sciatic → Tibial"
+                    },
+                    {
+                        name: "Tibialis Posterior",
+                        nerve: "Tibial",
+                        roots: ["L5", "S1"],
+                        plexus: "Sacral plexus → Sciatic → Tibial"
+                    },
+                    {
+                        name: "Flexor Digitorum Longus",
+                        nerve: "Tibial",
+                        roots: ["L5", "S1"],
+                        plexus: "Sacral plexus → Sciatic → Tibial"
+                    },
+                    {
+                        name: "Flexor Hallucis Longus",
+                        nerve: "Tibial",
+                        roots: ["L5", "S1", "S2"],
+                        plexus: "Sacral plexus → Sciatic → Tibial"
+                    },
+                    {
+                        name: "Abductor Hallucis",
+                        nerve: "Tibial (Medial Plantar)",
+                        roots: ["S1", "S2"],
+                        plexus: "Sacral plexus → Sciatic → Tibial"
+                    },
+                    {
+                        name: "Abductor Digiti Minimi (Foot)",
+                        nerve: "Tibial (Lateral Plantar)",
+                        roots: ["S1", "S2"],
+                        plexus: "Sacral plexus → Sciatic → Tibial"
+                    },
+                    {
+                        name: "Tibialis Anterior",
+                        nerve: "Deep Peroneal",
+                        roots: ["L4", "L5"],
+                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
+                    },
+                    {
+                        name: "Extensor Hallucis Longus",
+                        nerve: "Deep Peroneal",
+                        roots: ["L5", "S1"],
+                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
+                    },
+                    {
+                        name: "Extensor Digitorum Longus",
+                        nerve: "Deep Peroneal",
+                        roots: ["L5", "S1"],
+                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
+                    },
+                    {
+                        name: "Extensor Digitorum Brevis",
+                        nerve: "Deep Peroneal",
+                        roots: ["L5", "S1"],
+                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
+                    },
+                    {
+                        name: "Peroneus Longus",
+                        nerve: "Superficial Peroneal",
+                        roots: ["L5", "S1"],
+                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal"
+                    },
+                    {
+                        name: "Peroneus Brevis",
+                        nerve: "Superficial Peroneal",
+                        roots: ["L5", "S1"],
+                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal"
+                    }
+                ],
+                nerves: [
+                    {
+                        name: "Femoral Nerve",
+                        roots: ["L2", "L3", "L4"],
+                        plexus: "Lumbar plexus (posterior divisions of L2-L4)",
+                        muscles: ["Iliopsoas", "Quadriceps Femoris", "Sartorius"]
+                    },
+                    {
+                        name: "Obturator Nerve",
+                        roots: ["L2", "L3", "L4"],
+                        plexus: "Lumbar plexus (anterior divisions of L2-L4)",
+                        muscles: ["Adductor Longus", "Adductor Magnus (Anterior)", "Gracilis"]
+                    },
+                    {
+                        name: "Sciatic Nerve",
+                        roots: ["L4", "L5", "S1", "S2", "S3"],
+                        plexus: "Sacral plexus (lumbosacral trunk L4-L5 + anterior rami S1-S3)",
+                        muscles: ["Biceps Femoris (Long Head)", "Biceps Femoris (Short Head)", "Semitendinosus", "Semimembranosus", "Adductor Magnus (Posterior)"]
+                    },
+                    {
+                        name: "Tibial Nerve",
+                        roots: ["L4", "L5", "S1", "S2", "S3"],
+                        plexus: "Sacral plexus → medial division of Sciatic",
+                        muscles: ["Gastrocnemius", "Soleus", "Tibialis Posterior", "Flexor Digitorum Longus", "Flexor Hallucis Longus", "Abductor Hallucis", "Abductor Digiti Minimi (Foot)"]
+                    },
+                    {
+                        name: "Common Peroneal Nerve",
+                        roots: ["L4", "L5", "S1", "S2"],
+                        plexus: "Sacral plexus → lateral division of Sciatic",
+                        muscles: ["Biceps Femoris (Short Head)"]
+                    },
+                    {
+                        name: "Deep Peroneal Nerve",
+                        roots: ["L4", "L5", "S1"],
+                        plexus: "Branch of Common Peroneal",
+                        muscles: ["Tibialis Anterior", "Extensor Hallucis Longus", "Extensor Digitorum Longus", "Extensor Digitorum Brevis"]
+                    },
+                    {
+                        name: "Superficial Peroneal Nerve",
+                        roots: ["L5", "S1"],
+                        plexus: "Branch of Common Peroneal",
+                        muscles: ["Peroneus Longus", "Peroneus Brevis"]
+                    },
+                    {
+                        name: "Superior Gluteal Nerve",
+                        roots: ["L4", "L5", "S1"],
+                        plexus: "Sacral plexus (exits above piriformis)",
+                        muscles: ["Gluteus Medius", "Gluteus Minimus", "Tensor Fasciae Latae"]
+                    },
+                    {
+                        name: "Inferior Gluteal Nerve",
+                        roots: ["L5", "S1", "S2"],
+                        plexus: "Sacral plexus (exits below piriformis)",
+                        muscles: ["Gluteus Maximus"]
+                    }
+                ]
+            }
+        };
+
+        let currentExtremity = 'upper';
+        let selectedItem = null;
+        let selectedType = null;
+
+        // Initialize the app
+        function init() {
+            renderMuscles('upper');
+            renderNerves('upper');
+            renderMuscles('lower');
+            renderNerves('lower');
+            setupEventListeners();
+        }
+
+        function renderMuscles(extremity) {
+            const container = document.getElementById(`${extremity}-muscles`);
+            const muscles = neuroanatomyData[extremity].muscles;
+
+            container.innerHTML = muscles.map(muscle => `
+                <div class="item" data-type="muscle" data-name="${muscle.name}" data-extremity="${extremity}">
+                    <div class="item-name">${muscle.name}</div>
+                    <div class="item-details">
+                        <span class="nerve-badge">${muscle.nerve}</span>
+                        ${muscle.roots.map(r => `<span class="root-badge">${r}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderNerves(extremity) {
+            const container = document.getElementById(`${extremity}-nerves`);
+            const nerves = neuroanatomyData[extremity].nerves;
+
+            container.innerHTML = nerves.map(nerve => `
+                <div class="item" data-type="nerve" data-name="${nerve.name}" data-extremity="${extremity}">
+                    <div class="item-name">${nerve.name}</div>
+                    <div class="item-details">
+                        ${nerve.roots.map(r => `<span class="root-badge">${r}</span>`).join('')}
+                        <span class="plexus-badge">${nerve.plexus.split(' ')[0]}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function setupEventListeners() {
+            // Tab switching
+            document.querySelectorAll('.extremity-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const extremity = tab.dataset.extremity;
+                    switchExtremity(extremity);
+                });
+            });
+
+            // Item clicks
+            document.querySelectorAll('.item').forEach(item => {
+                item.addEventListener('click', () => {
+                    handleItemClick(item);
+                });
+            });
+        }
+
+        function switchExtremity(extremity) {
+            currentExtremity = extremity;
+
+            // Update tabs
+            document.querySelectorAll('.extremity-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.extremity === extremity);
+            });
+
+            // Update content visibility
+            document.getElementById('upper-content').classList.toggle('hidden', extremity !== 'upper');
+            document.getElementById('lower-content').classList.toggle('hidden', extremity !== 'lower');
+
+            // Clear selection
+            clearSelection();
+            closeDetailPanel();
+        }
+
+        function handleItemClick(element) {
+            const type = element.dataset.type;
+            const name = element.dataset.name;
+            const extremity = element.dataset.extremity;
+
+            // Clear previous selection
+            clearSelection();
+
+            // Set new selection
+            element.classList.add('selected');
+            selectedItem = name;
+            selectedType = type;
+
+            if (type === 'muscle') {
+                const muscle = neuroanatomyData[extremity].muscles.find(m => m.name === name);
+                showMuscleDetail(muscle, extremity);
+                highlightRelatedNerve(muscle.nerve, extremity);
+            } else {
+                const nerve = neuroanatomyData[extremity].nerves.find(n => n.name === name);
+                showNerveDetail(nerve, extremity);
+                highlightRelatedMuscles(nerve.muscles, extremity);
+            }
+        }
+
+        function clearSelection() {
+            document.querySelectorAll('.item').forEach(item => {
+                item.classList.remove('selected', 'highlighted');
+            });
+        }
+
+        function highlightRelatedNerve(nerveName, extremity) {
+            document.querySelectorAll(`#${extremity}-nerves .item`).forEach(item => {
+                const itemNerve = item.dataset.name;
+                if (nerveName.includes(itemNerve.replace(' Nerve', '')) ||
+                    itemNerve.includes(nerveName.split(' ')[0])) {
+                    item.classList.add('highlighted');
+                }
+            });
+        }
+
+        function highlightRelatedMuscles(muscles, extremity) {
+            document.querySelectorAll(`#${extremity}-muscles .item`).forEach(item => {
+                if (muscles.includes(item.dataset.name)) {
+                    item.classList.add('highlighted');
+                }
+            });
+        }
+
+        function showMuscleDetail(muscle, extremity) {
+            const panel = document.getElementById('detail-panel');
+            const info = document.getElementById('detail-info');
+
+            info.innerHTML = `
+                <div class="detail-title">${muscle.name}</div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Nerve Innervation</div>
+                        <div class="detail-value">${muscle.nerve}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Root Levels</div>
+                        <div class="detail-value">${muscle.roots.join('-')}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Plexus Location</div>
+                        <div class="detail-value">${muscle.plexus}</div>
+                    </div>
+                </div>
+            `;
+
+            panel.classList.add('visible');
+        }
+
+        function showNerveDetail(nerve, extremity) {
+            const panel = document.getElementById('detail-panel');
+            const info = document.getElementById('detail-info');
+
+            info.innerHTML = `
+                <div class="detail-title">${nerve.name}</div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Root Levels</div>
+                        <div class="detail-value">${nerve.roots.join('-')}</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Plexus Anatomy</div>
+                        <div class="detail-value">${nerve.plexus}</div>
+                    </div>
+                    <div class="detail-item" style="grid-column: span 2;">
+                        <div class="detail-label">Muscles Innervated (${nerve.muscles.length})</div>
+                        <div class="muscle-list">
+                            ${nerve.muscles.map(m => `<span class="muscle-tag" onclick="selectMuscleFromNerve('${m}', '${extremity}')">${m}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            panel.classList.add('visible');
+        }
+
+        function selectMuscleFromNerve(muscleName, extremity) {
+            const muscleElement = document.querySelector(`#${extremity}-muscles .item[data-name="${muscleName}"]`);
+            if (muscleElement) {
+                muscleElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                handleItemClick(muscleElement);
+            }
+        }
+
+        function closeDetailPanel() {
+            document.getElementById('detail-panel').classList.remove('visible');
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
