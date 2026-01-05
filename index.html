@@ -639,6 +639,160 @@
             flex-wrap: wrap;
             gap: 0.25rem;
         }
+
+        /* Image Viewer Styles */
+        .image-viewer {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 1.5rem;
+            overflow: hidden;
+            display: none;
+        }
+
+        .image-viewer.visible {
+            display: block;
+        }
+
+        .image-viewer-header {
+            background: var(--purple);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .image-viewer-title {
+            font-size: 0.95rem;
+        }
+
+        .image-viewer-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .image-viewer-close:hover {
+            opacity: 1;
+        }
+
+        .image-viewer-content {
+            padding: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .diagram-image-container {
+            flex: 1;
+            min-width: 280px;
+            max-width: 500px;
+        }
+
+        .diagram-image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .diagram-image-container img:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .diagram-image-label {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .no-image-placeholder {
+            background: var(--bg);
+            border: 2px dashed var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .no-image-placeholder p {
+            margin-bottom: 0.5rem;
+        }
+
+        .no-image-placeholder code {
+            background: white;
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        /* Lightbox for full-size image viewing */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .lightbox.visible {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .lightbox-close:hover {
+            opacity: 1;
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -992,6 +1146,17 @@
                 </div>
             </div>
 
+            <!-- Image Viewer Section -->
+            <div class="image-viewer" id="image-viewer">
+                <div class="image-viewer-header">
+                    <span class="image-viewer-title" id="image-viewer-title">Anatomical Diagrams</span>
+                    <button class="image-viewer-close" onclick="closeImageViewer()">×</button>
+                </div>
+                <div class="image-viewer-content" id="image-viewer-content">
+                    <!-- Images will be dynamically inserted here -->
+                </div>
+            </div>
+
             <!-- Interactive Diagram Section -->
             <div class="section" style="margin-top: 1.5rem;">
                 <div class="section-header purple">Interactive Brachial Plexus Diagram</div>
@@ -1133,6 +1298,13 @@
         </div>
     </div>
 
+    <!-- Lightbox for full-size images -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <img id="lightbox-image" src="" alt="Full size diagram">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
     <script>
         // Comprehensive EMG Neuroanatomy Data
         const neuroanatomyData = {
@@ -1243,7 +1415,11 @@
                     sensoryNCS: ["LAC (Lateral Antebrachial Cutaneous)", "Median to Thumb"],
                     motorNCS: [],
                     emgMuscles: ["Infraspinatus", "Deltoid", "Biceps"],
-                    clinical: "Weakness in shoulder abduction and external rotation, elbow flexion. Decreased bicep and brachioradialis reflexes. Sensory loss over lateral arm and forearm."
+                    clinical: "Weakness in shoulder abduction and external rotation, elbow flexion. Decreased bicep and brachioradialis reflexes. Sensory loss over lateral arm and forearm.",
+                    images: {
+                        plexus: { src: "images/upper_trunk_plexus_diagram.png", label: "Upper Trunk Anatomy" },
+                        sensory: { src: "images/upper_trunk_sensory_territory.png", label: "Sensory Territory (C5-C6)" }
+                    }
                 },
                 {
                     id: "middle-trunk",
@@ -1253,7 +1429,10 @@
                     sensoryNCS: ["Median to Index Finger (80% of time)"],
                     motorNCS: [],
                     emgMuscles: ["Triceps", "FCR (Flexor Carpi Radialis)", "EDC (Extensor Digitorum Communis)"],
-                    clinical: "Weakness in elbow extension, wrist extension and flexion. Decreased triceps reflex. Sensory changes may affect middle finger."
+                    clinical: "Weakness in elbow extension, wrist extension and flexion. Decreased triceps reflex. Sensory changes may affect middle finger.",
+                    images: {
+                        plexus: { src: "images/brachial_plexus_full_diagram.png", label: "Middle Trunk (C7)" }
+                    }
                 },
                 {
                     id: "lower-trunk",
@@ -1263,7 +1442,11 @@
                     sensoryNCS: ["Ulnar to Digit 5", "MAC (Medial Antebrachial Cutaneous)"],
                     motorNCS: ["Median (APB) - abnormal", "Ulnar (ADM) - abnormal"],
                     emgMuscles: ["FDI (First Dorsal Interosseous)", "APB (Abductor Pollicis Brevis)", "EIP (Extensor Indicis Proprius)"],
-                    clinical: "Weakness of hand intrinsics (grip, fine motor). Sensory loss over medial arm and forearm. May see Horner syndrome if T1 root involved proximally."
+                    clinical: "Weakness of hand intrinsics (grip, fine motor). Sensory loss over medial arm and forearm. May see Horner syndrome if T1 root involved proximally.",
+                    images: {
+                        plexus: { src: "images/lower_trunk_plexus_diagram.png", label: "Lower Trunk Anatomy" },
+                        sensory: { src: "images/lower_trunk_sensory_territory.png", label: "Sensory Territory (C8-T1)" }
+                    }
                 }
             ],
             cords: [
@@ -1275,7 +1458,11 @@
                     sensoryNCS: ["LAC (Lateral Antebrachial Cutaneous)", "Median to Thumb", "Median to Index Finger"],
                     motorNCS: [],
                     emgMuscles: ["Biceps", "Pronator Teres"],
-                    clinical: "Weakness of elbow flexion (biceps), forearm pronation. Lateral cord gives rise to lateral contribution to median nerve and musculocutaneous nerve."
+                    clinical: "Weakness of elbow flexion (biceps), forearm pronation. Lateral cord gives rise to lateral contribution to median nerve and musculocutaneous nerve.",
+                    images: {
+                        plexus: { src: "images/brachial_plexus_full_diagram.png", label: "Lateral Cord Location" },
+                        sensory: { src: "images/upper_trunk_sensory_territory.png", label: "Sensory Territory" }
+                    }
                 },
                 {
                     id: "medial-cord",
@@ -1285,7 +1472,11 @@
                     sensoryNCS: ["Ulnar to Digit 5", "MAC (Medial Antebrachial Cutaneous)"],
                     motorNCS: ["Median (APB)", "Ulnar (ADM)"],
                     emgMuscles: ["FDI (First Dorsal Interosseous)", "APB (Abductor Pollicis Brevis)"],
-                    clinical: "Weakness of hand intrinsics (both median and ulnar innervated). Medial cord gives rise to ulnar nerve and medial contribution to median nerve."
+                    clinical: "Weakness of hand intrinsics (both median and ulnar innervated). Medial cord gives rise to ulnar nerve and medial contribution to median nerve.",
+                    images: {
+                        plexus: { src: "images/brachial_plexus_full_diagram.png", label: "Medial Cord Location" },
+                        sensory: { src: "images/lower_trunk_sensory_territory.png", label: "Sensory Territory (C8-T1)" }
+                    }
                 },
                 {
                     id: "posterior-cord",
@@ -1295,7 +1486,10 @@
                     sensoryNCS: ["Superficial Radial"],
                     motorNCS: ["Radial to EIP (Extensor Indicis Proprius)"],
                     emgMuscles: ["Deltoid", "EIP (Extensor Indicis Proprius)", "Triceps"],
-                    clinical: "Weakness of shoulder abduction (deltoid), elbow/wrist/finger extension. Posterior cord gives rise to radial nerve, axillary nerve, thoracodorsal nerve, and subscapular nerves."
+                    clinical: "Weakness of shoulder abduction (deltoid), elbow/wrist/finger extension. Posterior cord gives rise to radial nerve, axillary nerve, thoracodorsal nerve, and subscapular nerves.",
+                    images: {
+                        plexus: { src: "images/brachial_plexus_full_diagram.png", label: "Posterior Cord Location" }
+                    }
                 }
             ]
         };
@@ -1489,7 +1683,84 @@
 
             selectedPlexusLevel = levelId;
             showPlexusLevelDetail(level);
+            showLevelImages(level);
         }
+
+        function showLevelImages(level) {
+            const viewer = document.getElementById('image-viewer');
+            const title = document.getElementById('image-viewer-title');
+            const content = document.getElementById('image-viewer-content');
+
+            title.textContent = `${level.name} - Anatomical Diagrams`;
+
+            if (level.images && Object.keys(level.images).length > 0) {
+                let imagesHtml = '';
+
+                for (const [key, img] of Object.entries(level.images)) {
+                    imagesHtml += `
+                        <div class="diagram-image-container">
+                            <img src="${img.src}"
+                                 alt="${img.label}"
+                                 onclick="openLightbox('${img.src}', '${img.label}')"
+                                 onerror="this.parentElement.innerHTML = createPlaceholder('${img.src}', '${img.label}')">
+                            <div class="diagram-image-label">${img.label}</div>
+                        </div>
+                    `;
+                }
+
+                content.innerHTML = imagesHtml;
+            } else {
+                content.innerHTML = `
+                    <div class="no-image-placeholder">
+                        <p>No specific diagrams configured for this level.</p>
+                        <p>Add images to <code>images/</code> folder.</p>
+                    </div>
+                `;
+            }
+
+            viewer.classList.add('visible');
+        }
+
+        function createPlaceholder(src, label) {
+            const filename = src.split('/').pop();
+            return `
+                <div class="no-image-placeholder">
+                    <p><strong>${label}</strong></p>
+                    <p>Image not found:</p>
+                    <code>${filename}</code>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Add this file to the images folder</p>
+                </div>
+            `;
+        }
+
+        function closeImageViewer() {
+            document.getElementById('image-viewer').classList.remove('visible');
+        }
+
+        function openLightbox(src, caption) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-image');
+            const captionEl = document.getElementById('lightbox-caption');
+
+            img.src = src;
+            captionEl.textContent = caption;
+            lightbox.classList.add('visible');
+
+            // Prevent body scroll when lightbox is open
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        // Close lightbox with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
 
         function showPlexusLevelDetail(level) {
             const panel = document.getElementById('detail-panel');
