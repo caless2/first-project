@@ -13,6 +13,8 @@
             --accent-light: #63b3ed;
             --success: #38a169;
             --warning: #d69e2e;
+            --danger: #e53e3e;
+            --purple: #805ad5;
             --bg: #f7fafc;
             --card-bg: #ffffff;
             --border: #e2e8f0;
@@ -63,10 +65,12 @@
             display: flex;
             gap: 0.5rem;
             margin-bottom: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .extremity-tab {
             flex: 1;
+            min-width: 150px;
             padding: 1rem 1.5rem;
             border: none;
             background: var(--card-bg);
@@ -86,6 +90,10 @@
         .extremity-tab.active {
             background: var(--accent);
             color: white;
+        }
+
+        .extremity-tab.plexus-tab.active {
+            background: var(--purple);
         }
 
         .main-content {
@@ -129,10 +137,18 @@
             letter-spacing: 0.5px;
         }
 
+        .section-header.purple {
+            background: var(--purple);
+        }
+
         .section-content {
             padding: 1rem;
             max-height: 500px;
             overflow-y: auto;
+        }
+
+        .section-content.tall {
+            max-height: 700px;
         }
 
         .item {
@@ -203,6 +219,38 @@
             margin-left: 0.25rem;
         }
 
+        .sensory-badge {
+            display: inline-block;
+            background: #9f7aea;
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        .motor-badge {
+            display: inline-block;
+            background: var(--danger);
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.25rem;
+        }
+
+        .emg-badge {
+            display: inline-block;
+            background: #319795;
+            color: white;
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
         .diagram-section {
             grid-row: span 2;
         }
@@ -235,6 +283,22 @@
         .plexus-diagram text { font-size: 10px; fill: var(--text); font-weight: 500; }
         .plexus-diagram .label { font-size: 8px; fill: white; }
         .plexus-diagram .connector { stroke: #a0aec0; stroke-width: 2; fill: none; }
+
+        .plexus-diagram .clickable {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .plexus-diagram .clickable:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+        }
+
+        .plexus-diagram .clickable.selected {
+            filter: brightness(1.3);
+            stroke: white;
+            stroke-width: 3;
+        }
 
         .diagram-legend {
             display: flex;
@@ -269,10 +333,16 @@
             transition: transform 0.3s ease;
             z-index: 100;
             border-top: 3px solid var(--accent);
+            max-height: 50vh;
+            overflow-y: auto;
         }
 
         .detail-panel.visible {
             transform: translateY(0);
+        }
+
+        .detail-panel.plexus-panel {
+            border-top-color: var(--purple);
         }
 
         .detail-panel-content {
@@ -288,6 +358,12 @@
             font-weight: 700;
             color: var(--primary);
             margin-bottom: 0.5rem;
+        }
+
+        .detail-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
         }
 
         .detail-info {
@@ -307,6 +383,10 @@
             border-radius: 8px;
         }
 
+        .detail-item.full-width {
+            grid-column: 1 / -1;
+        }
+
         .detail-label {
             font-size: 0.75rem;
             color: var(--text-muted);
@@ -318,6 +398,12 @@
         .detail-value {
             font-weight: 600;
             color: var(--text);
+        }
+
+        .detail-value.clinical {
+            font-weight: 400;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
         .muscle-list {
@@ -374,22 +460,184 @@
             display: none;
         }
 
+        /* Plexus Section Specific Styles */
+        .plexus-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 1000px) {
+            .plexus-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .level-card {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: var(--bg);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .level-card:hover {
+            background: #edf2f7;
+            border-color: var(--border);
+        }
+
+        .level-card.selected {
+            border-color: var(--purple);
+            background: #faf5ff;
+        }
+
+        .level-card.trunk {
+            border-left: 4px solid var(--purple);
+        }
+
+        .level-card.cord {
+            border-left: 4px solid var(--success);
+        }
+
+        .level-name {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .level-roots {
+            margin-bottom: 0.5rem;
+        }
+
+        .level-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            font-size: 0.75rem;
+        }
+
+        .level-summary-item {
+            background: white;
+            padding: 0.375rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .level-summary-label {
+            color: var(--text-muted);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            margin-bottom: 0.125rem;
+        }
+
+        .level-summary-value {
+            color: var(--text);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Complete Guide Styles */
+        .guide-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .guide-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .guide-table td {
+            padding: 0.625rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .guide-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .guide-table .level-col {
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .guide-table .trunk-row {
+            background: #faf5ff;
+        }
+
+        .guide-table .cord-row {
+            background: #f0fff4;
+        }
+
+        .sub-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+
+        .sub-tab {
+            flex: 1;
+            padding: 0.625rem 1rem;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .sub-tab:hover {
+            background: white;
+        }
+
+        .sub-tab.active {
+            background: var(--purple);
+            color: white;
+        }
+
         /* Scrollbar styling */
-        .section-content::-webkit-scrollbar {
+        .section-content::-webkit-scrollbar,
+        .detail-panel::-webkit-scrollbar {
             width: 6px;
         }
 
-        .section-content::-webkit-scrollbar-track {
+        .section-content::-webkit-scrollbar-track,
+        .detail-panel::-webkit-scrollbar-track {
             background: var(--bg);
         }
 
-        .section-content::-webkit-scrollbar-thumb {
+        .section-content::-webkit-scrollbar-thumb,
+        .detail-panel::-webkit-scrollbar-thumb {
             background: var(--border);
             border-radius: 3px;
         }
 
-        .section-content::-webkit-scrollbar-thumb:hover {
+        .section-content::-webkit-scrollbar-thumb:hover,
+        .detail-panel::-webkit-scrollbar-thumb:hover {
             background: var(--text-muted);
+        }
+
+        .ncs-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
         }
     </style>
 </head>
@@ -401,12 +649,13 @@
 
     <div class="container">
         <div class="instructions">
-            <strong>Quick Guide:</strong> Click on any muscle to see its innervation details, or click on a nerve to see all muscles it supplies. Related items will be highlighted.
+            <strong>Quick Guide:</strong> Click on any muscle to see its innervation details, or click on a nerve to see all muscles it supplies. In the Brachial Plexus section, click anatomical levels to see NCS/EMG protocols and clinical findings.
         </div>
 
         <div class="extremity-tabs">
             <button class="extremity-tab active" data-extremity="upper">Upper Extremity</button>
             <button class="extremity-tab" data-extremity="lower">Lower Extremity</button>
+            <button class="extremity-tab plexus-tab" data-extremity="plexus">Brachial Plexus</button>
         </div>
 
         <!-- Upper Extremity Content -->
@@ -701,6 +950,179 @@
                 </div>
             </div>
         </div>
+
+        <!-- Brachial Plexus Section -->
+        <div id="plexus-content" class="hidden">
+            <div class="sub-tabs">
+                <button class="sub-tab active" data-subtab="levels">By Anatomical Level</button>
+                <button class="sub-tab" data-subtab="guide">Complete Guide</button>
+            </div>
+
+            <!-- By Level View -->
+            <div id="levels-view" class="plexus-content">
+                <div class="section">
+                    <div class="section-header purple">Trunks</div>
+                    <div class="section-content" id="trunk-levels"></div>
+                </div>
+                <div class="section">
+                    <div class="section-header purple">Cords</div>
+                    <div class="section-content" id="cord-levels"></div>
+                </div>
+            </div>
+
+            <!-- Complete Guide View -->
+            <div id="guide-view" class="hidden">
+                <div class="section">
+                    <div class="section-header purple">Complete Brachial Plexus Reference</div>
+                    <div class="section-content tall" style="max-height: none; overflow-x: auto;">
+                        <table class="guide-table">
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Roots</th>
+                                    <th>Sensory NCS</th>
+                                    <th>Motor NCS</th>
+                                    <th>EMG Muscles</th>
+                                    <th>Clinical Findings</th>
+                                </tr>
+                            </thead>
+                            <tbody id="guide-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Diagram Section -->
+            <div class="section" style="margin-top: 1.5rem;">
+                <div class="section-header purple">Interactive Brachial Plexus Diagram</div>
+                <div class="diagram-container">
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Click on trunks (purple) or cords (green) to see details</p>
+                    <svg class="plexus-diagram" viewBox="0 0 450 420" id="interactive-plexus-svg">
+                        <!-- Roots -->
+                        <text x="20" y="50">C5</text>
+                        <circle class="root" cx="50" cy="45" r="14"/>
+                        <text x="20" y="95">C6</text>
+                        <circle class="root" cx="50" cy="90" r="14"/>
+                        <text x="20" y="140">C7</text>
+                        <circle class="root" cx="50" cy="135" r="14"/>
+                        <text x="20" y="185">C8</text>
+                        <circle class="root" cx="50" cy="180" r="14"/>
+                        <text x="20" y="230">T1</text>
+                        <circle class="root" cx="50" cy="225" r="14"/>
+
+                        <!-- Connectors to trunks -->
+                        <path class="connector" d="M64,45 Q95,45 115,70"/>
+                        <path class="connector" d="M64,90 Q95,90 115,70"/>
+                        <path class="connector" d="M64,135 L115,135"/>
+                        <path class="connector" d="M64,180 Q95,180 115,200"/>
+                        <path class="connector" d="M64,225 Q95,225 115,200"/>
+
+                        <!-- TRUNKS (clickable) -->
+                        <g class="clickable" data-level="upper-trunk" onclick="selectPlexusLevel('upper-trunk')">
+                            <rect class="trunk" x="115" y="50" width="60" height="40" rx="6"/>
+                            <text class="label" x="125" y="75">Upper</text>
+                        </g>
+
+                        <g class="clickable" data-level="middle-trunk" onclick="selectPlexusLevel('middle-trunk')">
+                            <rect class="trunk" x="115" y="115" width="60" height="40" rx="6"/>
+                            <text class="label" x="122" y="140">Middle</text>
+                        </g>
+
+                        <g class="clickable" data-level="lower-trunk" onclick="selectPlexusLevel('lower-trunk')">
+                            <rect class="trunk" x="115" y="180" width="60" height="40" rx="6"/>
+                            <text class="label" x="125" y="205">Lower</text>
+                        </g>
+
+                        <!-- Divisions -->
+                        <text x="200" y="35" style="font-size: 9px; fill: #805ad5;">Ant/Post Divisions</text>
+
+                        <!-- From Upper Trunk -->
+                        <path class="connector" d="M175,70 Q195,70 210,90"/>
+                        <circle class="division" cx="210" cy="90" r="7"/>
+                        <path class="connector" d="M175,70 Q195,85 220,100"/>
+                        <circle class="division" cx="220" cy="100" r="5"/>
+
+                        <!-- From Middle Trunk -->
+                        <path class="connector" d="M175,135 L210,135"/>
+                        <circle class="division" cx="210" cy="135" r="7"/>
+                        <path class="connector" d="M175,135 Q195,145 225,150"/>
+                        <circle class="division" cx="225" cy="150" r="5"/>
+
+                        <!-- From Lower Trunk -->
+                        <path class="connector" d="M175,200 Q195,200 210,175"/>
+                        <circle class="division" cx="210" cy="175" r="7"/>
+                        <path class="connector" d="M175,200 Q200,190 230,185"/>
+                        <circle class="division" cx="230" cy="185" r="5"/>
+
+                        <!-- CORDS (clickable) -->
+                        <path class="connector" d="M217,90 Q240,105 255,125"/>
+                        <path class="connector" d="M217,135 Q240,135 255,135"/>
+                        <g class="clickable" data-level="lateral-cord" onclick="selectPlexusLevel('lateral-cord')">
+                            <rect class="cord" x="255" y="115" width="55" height="40" rx="6"/>
+                            <text class="label" x="263" y="140">Lateral</text>
+                        </g>
+
+                        <path class="connector" d="M225,100 Q260,120 285,170"/>
+                        <path class="connector" d="M230,150 Q265,165 285,180"/>
+                        <path class="connector" d="M235,185 Q265,190 285,190"/>
+                        <g class="clickable" data-level="posterior-cord" onclick="selectPlexusLevel('posterior-cord')">
+                            <rect class="cord" x="270" y="170" width="65" height="40" rx="6"/>
+                            <text class="label" x="275" y="195">Posterior</text>
+                        </g>
+
+                        <path class="connector" d="M217,175 Q240,200 255,225"/>
+                        <g class="clickable" data-level="medial-cord" onclick="selectPlexusLevel('medial-cord')">
+                            <rect class="cord" x="255" y="220" width="55" height="40" rx="6"/>
+                            <text class="label" x="263" y="245">Medial</text>
+                        </g>
+
+                        <!-- Terminal Nerves -->
+                        <path class="connector" d="M310,135 Q340,160 355,200"/>
+                        <rect class="nerve" x="345" y="195" width="95" height="24" rx="4"/>
+                        <text class="label" x="352" y="212">Musculocutaneous</text>
+
+                        <path class="connector" d="M310,155 Q360,200 370,255"/>
+                        <path class="connector" d="M310,240 Q345,250 370,260"/>
+                        <rect class="nerve" x="360" y="250" width="60" height="24" rx="4"/>
+                        <text class="label" x="370" y="267">Median</text>
+
+                        <path class="connector" d="M335,190 Q370,230 385,300"/>
+                        <rect class="nerve" x="370" y="295" width="55" height="24" rx="4"/>
+                        <text class="label" x="380" y="312">Radial</text>
+
+                        <path class="connector" d="M310,260 Q340,300 355,350"/>
+                        <rect class="nerve" x="345" y="345" width="50" height="24" rx="4"/>
+                        <text class="label" x="355" y="362">Ulnar</text>
+
+                        <path class="connector" d="M302,210 Q330,260 350,390"/>
+                        <rect class="nerve" x="340" y="385" width="55" height="24" rx="4"/>
+                        <text class="label" x="348" y="402">Axillary</text>
+                    </svg>
+                    <div class="diagram-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--accent);"></div>
+                            <span>Roots</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #805ad5;"></div>
+                            <span>Trunks (click)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #d69e2e;"></div>
+                            <span>Divisions</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #38a169;"></div>
+                            <span>Cords (click)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #e53e3e;"></div>
+                            <span>Terminal Nerves</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Detail Panel -->
@@ -716,513 +1138,172 @@
         const neuroanatomyData = {
             upper: {
                 muscles: [
-                    {
-                        name: "Deltoid",
-                        nerve: "Axillary",
-                        roots: ["C5", "C6"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Biceps Brachii",
-                        nerve: "Musculocutaneous",
-                        roots: ["C5", "C6"],
-                        plexus: "Lateral cord"
-                    },
-                    {
-                        name: "Brachialis",
-                        nerve: "Musculocutaneous",
-                        roots: ["C5", "C6"],
-                        plexus: "Lateral cord"
-                    },
-                    {
-                        name: "Brachioradialis",
-                        nerve: "Radial",
-                        roots: ["C5", "C6"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Triceps Brachii",
-                        nerve: "Radial",
-                        roots: ["C6", "C7", "C8"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Extensor Carpi Radialis Longus",
-                        nerve: "Radial",
-                        roots: ["C6", "C7"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Extensor Carpi Radialis Brevis",
-                        nerve: "Radial (PIN)",
-                        roots: ["C7", "C8"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Extensor Digitorum Communis",
-                        nerve: "Radial (PIN)",
-                        roots: ["C7", "C8"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Extensor Carpi Ulnaris",
-                        nerve: "Radial (PIN)",
-                        roots: ["C7", "C8"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Supinator",
-                        nerve: "Radial (PIN)",
-                        roots: ["C5", "C6"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Pronator Teres",
-                        nerve: "Median",
-                        roots: ["C6", "C7"],
-                        plexus: "Lateral cord → Median"
-                    },
-                    {
-                        name: "Flexor Carpi Radialis",
-                        nerve: "Median",
-                        roots: ["C6", "C7"],
-                        plexus: "Lateral cord → Median"
-                    },
-                    {
-                        name: "Flexor Digitorum Superficialis",
-                        nerve: "Median",
-                        roots: ["C7", "C8", "T1"],
-                        plexus: "Medial & Lateral cords → Median"
-                    },
-                    {
-                        name: "Flexor Pollicis Longus",
-                        nerve: "Median (AIN)",
-                        roots: ["C7", "C8"],
-                        plexus: "Medial & Lateral cords → Median"
-                    },
-                    {
-                        name: "Flexor Digitorum Profundus I-II",
-                        nerve: "Median (AIN)",
-                        roots: ["C7", "C8"],
-                        plexus: "Medial & Lateral cords → Median"
-                    },
-                    {
-                        name: "Pronator Quadratus",
-                        nerve: "Median (AIN)",
-                        roots: ["C7", "C8"],
-                        plexus: "Medial & Lateral cords → Median"
-                    },
-                    {
-                        name: "Abductor Pollicis Brevis",
-                        nerve: "Median",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord → Median"
-                    },
-                    {
-                        name: "Opponens Pollicis",
-                        nerve: "Median",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord → Median"
-                    },
-                    {
-                        name: "Lumbricals I-II",
-                        nerve: "Median",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord → Median"
-                    },
-                    {
-                        name: "Flexor Carpi Ulnaris",
-                        nerve: "Ulnar",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    },
-                    {
-                        name: "Flexor Digitorum Profundus III-IV",
-                        nerve: "Ulnar",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    },
-                    {
-                        name: "First Dorsal Interosseous",
-                        nerve: "Ulnar",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    },
-                    {
-                        name: "Abductor Digiti Minimi (Hand)",
-                        nerve: "Ulnar",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    },
-                    {
-                        name: "Adductor Pollicis",
-                        nerve: "Ulnar",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    },
-                    {
-                        name: "Lumbricals III-IV",
-                        nerve: "Ulnar",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    },
-                    {
-                        name: "Interossei (Palmar & Dorsal)",
-                        nerve: "Ulnar",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    },
-                    {
-                        name: "Supraspinatus",
-                        nerve: "Suprascapular",
-                        roots: ["C5", "C6"],
-                        plexus: "Upper trunk"
-                    },
-                    {
-                        name: "Infraspinatus",
-                        nerve: "Suprascapular",
-                        roots: ["C5", "C6"],
-                        plexus: "Upper trunk"
-                    },
-                    {
-                        name: "Rhomboids",
-                        nerve: "Dorsal Scapular",
-                        roots: ["C5"],
-                        plexus: "Root (C5)"
-                    },
-                    {
-                        name: "Serratus Anterior",
-                        nerve: "Long Thoracic",
-                        roots: ["C5", "C6", "C7"],
-                        plexus: "Roots (C5-C7)"
-                    },
-                    {
-                        name: "Latissimus Dorsi",
-                        nerve: "Thoracodorsal",
-                        roots: ["C6", "C7", "C8"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Teres Major",
-                        nerve: "Subscapular (Lower)",
-                        roots: ["C5", "C6"],
-                        plexus: "Posterior cord"
-                    },
-                    {
-                        name: "Pectoralis Major (Clavicular)",
-                        nerve: "Lateral Pectoral",
-                        roots: ["C5", "C6", "C7"],
-                        plexus: "Lateral cord"
-                    },
-                    {
-                        name: "Pectoralis Major (Sternal)",
-                        nerve: "Medial Pectoral",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord"
-                    }
+                    { name: "Deltoid", nerve: "Axillary", roots: ["C5", "C6"], plexus: "Posterior cord" },
+                    { name: "Biceps Brachii", nerve: "Musculocutaneous", roots: ["C5", "C6"], plexus: "Lateral cord" },
+                    { name: "Brachialis", nerve: "Musculocutaneous", roots: ["C5", "C6"], plexus: "Lateral cord" },
+                    { name: "Brachioradialis", nerve: "Radial", roots: ["C5", "C6"], plexus: "Posterior cord" },
+                    { name: "Triceps Brachii", nerve: "Radial", roots: ["C6", "C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Extensor Carpi Radialis Longus", nerve: "Radial", roots: ["C6", "C7"], plexus: "Posterior cord" },
+                    { name: "Extensor Carpi Radialis Brevis", nerve: "Radial (PIN)", roots: ["C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Extensor Digitorum Communis", nerve: "Radial (PIN)", roots: ["C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Extensor Carpi Ulnaris", nerve: "Radial (PIN)", roots: ["C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Supinator", nerve: "Radial (PIN)", roots: ["C5", "C6"], plexus: "Posterior cord" },
+                    { name: "Pronator Teres", nerve: "Median", roots: ["C6", "C7"], plexus: "Lateral cord → Median" },
+                    { name: "Flexor Carpi Radialis", nerve: "Median", roots: ["C6", "C7"], plexus: "Lateral cord → Median" },
+                    { name: "Flexor Digitorum Superficialis", nerve: "Median", roots: ["C7", "C8", "T1"], plexus: "Medial & Lateral cords → Median" },
+                    { name: "Flexor Pollicis Longus", nerve: "Median (AIN)", roots: ["C7", "C8"], plexus: "Medial & Lateral cords → Median" },
+                    { name: "Flexor Digitorum Profundus I-II", nerve: "Median (AIN)", roots: ["C7", "C8"], plexus: "Medial & Lateral cords → Median" },
+                    { name: "Pronator Quadratus", nerve: "Median (AIN)", roots: ["C7", "C8"], plexus: "Medial & Lateral cords → Median" },
+                    { name: "Abductor Pollicis Brevis", nerve: "Median", roots: ["C8", "T1"], plexus: "Medial cord → Median" },
+                    { name: "Opponens Pollicis", nerve: "Median", roots: ["C8", "T1"], plexus: "Medial cord → Median" },
+                    { name: "Lumbricals I-II", nerve: "Median", roots: ["C8", "T1"], plexus: "Medial cord → Median" },
+                    { name: "Flexor Carpi Ulnaris", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
+                    { name: "Flexor Digitorum Profundus III-IV", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
+                    { name: "First Dorsal Interosseous", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
+                    { name: "Abductor Digiti Minimi (Hand)", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
+                    { name: "Adductor Pollicis", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
+                    { name: "Lumbricals III-IV", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
+                    { name: "Interossei (Palmar & Dorsal)", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
+                    { name: "Supraspinatus", nerve: "Suprascapular", roots: ["C5", "C6"], plexus: "Upper trunk" },
+                    { name: "Infraspinatus", nerve: "Suprascapular", roots: ["C5", "C6"], plexus: "Upper trunk" },
+                    { name: "Rhomboids", nerve: "Dorsal Scapular", roots: ["C5"], plexus: "Root (C5)" },
+                    { name: "Serratus Anterior", nerve: "Long Thoracic", roots: ["C5", "C6", "C7"], plexus: "Roots (C5-C7)" },
+                    { name: "Latissimus Dorsi", nerve: "Thoracodorsal", roots: ["C6", "C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Teres Major", nerve: "Subscapular (Lower)", roots: ["C5", "C6"], plexus: "Posterior cord" },
+                    { name: "Pectoralis Major (Clavicular)", nerve: "Lateral Pectoral", roots: ["C5", "C6", "C7"], plexus: "Lateral cord" },
+                    { name: "Pectoralis Major (Sternal)", nerve: "Medial Pectoral", roots: ["C8", "T1"], plexus: "Medial cord" }
                 ],
                 nerves: [
-                    {
-                        name: "Median Nerve",
-                        roots: ["C6", "C7", "C8", "T1"],
-                        plexus: "Lateral cord (C6-C7) + Medial cord (C8-T1) → joins to form median nerve",
-                        muscles: ["Pronator Teres", "Flexor Carpi Radialis", "Flexor Digitorum Superficialis", "Flexor Pollicis Longus", "Flexor Digitorum Profundus I-II", "Pronator Quadratus", "Abductor Pollicis Brevis", "Opponens Pollicis", "Lumbricals I-II"]
-                    },
-                    {
-                        name: "Ulnar Nerve",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord",
-                        muscles: ["Flexor Carpi Ulnaris", "Flexor Digitorum Profundus III-IV", "First Dorsal Interosseous", "Abductor Digiti Minimi (Hand)", "Adductor Pollicis", "Lumbricals III-IV", "Interossei (Palmar & Dorsal)"]
-                    },
-                    {
-                        name: "Radial Nerve",
-                        roots: ["C5", "C6", "C7", "C8"],
-                        plexus: "Posterior cord",
-                        muscles: ["Triceps Brachii", "Brachioradialis", "Extensor Carpi Radialis Longus", "Extensor Carpi Radialis Brevis", "Extensor Digitorum Communis", "Extensor Carpi Ulnaris", "Supinator"]
-                    },
-                    {
-                        name: "Musculocutaneous Nerve",
-                        roots: ["C5", "C6", "C7"],
-                        plexus: "Lateral cord",
-                        muscles: ["Biceps Brachii", "Brachialis"]
-                    },
-                    {
-                        name: "Axillary Nerve",
-                        roots: ["C5", "C6"],
-                        plexus: "Posterior cord",
-                        muscles: ["Deltoid"]
-                    },
-                    {
-                        name: "Suprascapular Nerve",
-                        roots: ["C5", "C6"],
-                        plexus: "Upper trunk (direct branch)",
-                        muscles: ["Supraspinatus", "Infraspinatus"]
-                    },
-                    {
-                        name: "Long Thoracic Nerve",
-                        roots: ["C5", "C6", "C7"],
-                        plexus: "Direct from roots (C5-C7)",
-                        muscles: ["Serratus Anterior"]
-                    },
-                    {
-                        name: "Thoracodorsal Nerve",
-                        roots: ["C6", "C7", "C8"],
-                        plexus: "Posterior cord",
-                        muscles: ["Latissimus Dorsi"]
-                    },
-                    {
-                        name: "Dorsal Scapular Nerve",
-                        roots: ["C5"],
-                        plexus: "Direct from root (C5)",
-                        muscles: ["Rhomboids"]
-                    },
-                    {
-                        name: "Lateral Pectoral Nerve",
-                        roots: ["C5", "C6", "C7"],
-                        plexus: "Lateral cord",
-                        muscles: ["Pectoralis Major (Clavicular)"]
-                    },
-                    {
-                        name: "Medial Pectoral Nerve",
-                        roots: ["C8", "T1"],
-                        plexus: "Medial cord",
-                        muscles: ["Pectoralis Major (Sternal)"]
-                    }
+                    { name: "Median Nerve", roots: ["C6", "C7", "C8", "T1"], plexus: "Lateral cord (C6-C7) + Medial cord (C8-T1) → joins to form median nerve", muscles: ["Pronator Teres", "Flexor Carpi Radialis", "Flexor Digitorum Superficialis", "Flexor Pollicis Longus", "Flexor Digitorum Profundus I-II", "Pronator Quadratus", "Abductor Pollicis Brevis", "Opponens Pollicis", "Lumbricals I-II"] },
+                    { name: "Ulnar Nerve", roots: ["C8", "T1"], plexus: "Medial cord", muscles: ["Flexor Carpi Ulnaris", "Flexor Digitorum Profundus III-IV", "First Dorsal Interosseous", "Abductor Digiti Minimi (Hand)", "Adductor Pollicis", "Lumbricals III-IV", "Interossei (Palmar & Dorsal)"] },
+                    { name: "Radial Nerve", roots: ["C5", "C6", "C7", "C8"], plexus: "Posterior cord", muscles: ["Triceps Brachii", "Brachioradialis", "Extensor Carpi Radialis Longus", "Extensor Carpi Radialis Brevis", "Extensor Digitorum Communis", "Extensor Carpi Ulnaris", "Supinator"] },
+                    { name: "Musculocutaneous Nerve", roots: ["C5", "C6", "C7"], plexus: "Lateral cord", muscles: ["Biceps Brachii", "Brachialis"] },
+                    { name: "Axillary Nerve", roots: ["C5", "C6"], plexus: "Posterior cord", muscles: ["Deltoid"] },
+                    { name: "Suprascapular Nerve", roots: ["C5", "C6"], plexus: "Upper trunk (direct branch)", muscles: ["Supraspinatus", "Infraspinatus"] },
+                    { name: "Long Thoracic Nerve", roots: ["C5", "C6", "C7"], plexus: "Direct from roots (C5-C7)", muscles: ["Serratus Anterior"] },
+                    { name: "Thoracodorsal Nerve", roots: ["C6", "C7", "C8"], plexus: "Posterior cord", muscles: ["Latissimus Dorsi"] },
+                    { name: "Dorsal Scapular Nerve", roots: ["C5"], plexus: "Direct from root (C5)", muscles: ["Rhomboids"] },
+                    { name: "Lateral Pectoral Nerve", roots: ["C5", "C6", "C7"], plexus: "Lateral cord", muscles: ["Pectoralis Major (Clavicular)"] },
+                    { name: "Medial Pectoral Nerve", roots: ["C8", "T1"], plexus: "Medial cord", muscles: ["Pectoralis Major (Sternal)"] }
                 ]
             },
             lower: {
                 muscles: [
-                    {
-                        name: "Iliopsoas",
-                        nerve: "Femoral + Direct branches",
-                        roots: ["L1", "L2", "L3"],
-                        plexus: "Lumbar plexus"
-                    },
-                    {
-                        name: "Quadriceps Femoris",
-                        nerve: "Femoral",
-                        roots: ["L2", "L3", "L4"],
-                        plexus: "Lumbar plexus (posterior divisions)"
-                    },
-                    {
-                        name: "Sartorius",
-                        nerve: "Femoral",
-                        roots: ["L2", "L3"],
-                        plexus: "Lumbar plexus"
-                    },
-                    {
-                        name: "Adductor Longus",
-                        nerve: "Obturator",
-                        roots: ["L2", "L3", "L4"],
-                        plexus: "Lumbar plexus (anterior divisions)"
-                    },
-                    {
-                        name: "Adductor Magnus (Anterior)",
-                        nerve: "Obturator",
-                        roots: ["L2", "L3", "L4"],
-                        plexus: "Lumbar plexus"
-                    },
-                    {
-                        name: "Adductor Magnus (Posterior)",
-                        nerve: "Sciatic (Tibial portion)",
-                        roots: ["L4", "L5", "S1"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Gracilis",
-                        nerve: "Obturator",
-                        roots: ["L2", "L3"],
-                        plexus: "Lumbar plexus"
-                    },
-                    {
-                        name: "Gluteus Maximus",
-                        nerve: "Inferior Gluteal",
-                        roots: ["L5", "S1", "S2"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Gluteus Medius",
-                        nerve: "Superior Gluteal",
-                        roots: ["L4", "L5", "S1"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Gluteus Minimus",
-                        nerve: "Superior Gluteal",
-                        roots: ["L4", "L5", "S1"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Tensor Fasciae Latae",
-                        nerve: "Superior Gluteal",
-                        roots: ["L4", "L5", "S1"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Biceps Femoris (Long Head)",
-                        nerve: "Sciatic (Tibial portion)",
-                        roots: ["L5", "S1", "S2"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Biceps Femoris (Short Head)",
-                        nerve: "Sciatic (Peroneal portion)",
-                        roots: ["L5", "S1", "S2"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Semitendinosus",
-                        nerve: "Sciatic (Tibial portion)",
-                        roots: ["L5", "S1", "S2"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Semimembranosus",
-                        nerve: "Sciatic (Tibial portion)",
-                        roots: ["L5", "S1", "S2"],
-                        plexus: "Sacral plexus"
-                    },
-                    {
-                        name: "Gastrocnemius",
-                        nerve: "Tibial",
-                        roots: ["S1", "S2"],
-                        plexus: "Sacral plexus → Sciatic → Tibial"
-                    },
-                    {
-                        name: "Soleus",
-                        nerve: "Tibial",
-                        roots: ["S1", "S2"],
-                        plexus: "Sacral plexus → Sciatic → Tibial"
-                    },
-                    {
-                        name: "Tibialis Posterior",
-                        nerve: "Tibial",
-                        roots: ["L5", "S1"],
-                        plexus: "Sacral plexus → Sciatic → Tibial"
-                    },
-                    {
-                        name: "Flexor Digitorum Longus",
-                        nerve: "Tibial",
-                        roots: ["L5", "S1"],
-                        plexus: "Sacral plexus → Sciatic → Tibial"
-                    },
-                    {
-                        name: "Flexor Hallucis Longus",
-                        nerve: "Tibial",
-                        roots: ["L5", "S1", "S2"],
-                        plexus: "Sacral plexus → Sciatic → Tibial"
-                    },
-                    {
-                        name: "Abductor Hallucis",
-                        nerve: "Tibial (Medial Plantar)",
-                        roots: ["S1", "S2"],
-                        plexus: "Sacral plexus → Sciatic → Tibial"
-                    },
-                    {
-                        name: "Abductor Digiti Minimi (Foot)",
-                        nerve: "Tibial (Lateral Plantar)",
-                        roots: ["S1", "S2"],
-                        plexus: "Sacral plexus → Sciatic → Tibial"
-                    },
-                    {
-                        name: "Tibialis Anterior",
-                        nerve: "Deep Peroneal",
-                        roots: ["L4", "L5"],
-                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
-                    },
-                    {
-                        name: "Extensor Hallucis Longus",
-                        nerve: "Deep Peroneal",
-                        roots: ["L5", "S1"],
-                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
-                    },
-                    {
-                        name: "Extensor Digitorum Longus",
-                        nerve: "Deep Peroneal",
-                        roots: ["L5", "S1"],
-                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
-                    },
-                    {
-                        name: "Extensor Digitorum Brevis",
-                        nerve: "Deep Peroneal",
-                        roots: ["L5", "S1"],
-                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal"
-                    },
-                    {
-                        name: "Peroneus Longus",
-                        nerve: "Superficial Peroneal",
-                        roots: ["L5", "S1"],
-                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal"
-                    },
-                    {
-                        name: "Peroneus Brevis",
-                        nerve: "Superficial Peroneal",
-                        roots: ["L5", "S1"],
-                        plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal"
-                    }
+                    { name: "Iliopsoas", nerve: "Femoral + Direct branches", roots: ["L1", "L2", "L3"], plexus: "Lumbar plexus" },
+                    { name: "Quadriceps Femoris", nerve: "Femoral", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus (posterior divisions)" },
+                    { name: "Sartorius", nerve: "Femoral", roots: ["L2", "L3"], plexus: "Lumbar plexus" },
+                    { name: "Adductor Longus", nerve: "Obturator", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus (anterior divisions)" },
+                    { name: "Adductor Magnus (Anterior)", nerve: "Obturator", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus" },
+                    { name: "Adductor Magnus (Posterior)", nerve: "Sciatic (Tibial portion)", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Gracilis", nerve: "Obturator", roots: ["L2", "L3"], plexus: "Lumbar plexus" },
+                    { name: "Gluteus Maximus", nerve: "Inferior Gluteal", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
+                    { name: "Gluteus Medius", nerve: "Superior Gluteal", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Gluteus Minimus", nerve: "Superior Gluteal", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Tensor Fasciae Latae", nerve: "Superior Gluteal", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Biceps Femoris (Long Head)", nerve: "Sciatic (Tibial portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
+                    { name: "Biceps Femoris (Short Head)", nerve: "Sciatic (Peroneal portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
+                    { name: "Semitendinosus", nerve: "Sciatic (Tibial portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
+                    { name: "Semimembranosus", nerve: "Sciatic (Tibial portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
+                    { name: "Gastrocnemius", nerve: "Tibial", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Soleus", nerve: "Tibial", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Tibialis Posterior", nerve: "Tibial", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Flexor Digitorum Longus", nerve: "Tibial", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Flexor Hallucis Longus", nerve: "Tibial", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Abductor Hallucis", nerve: "Tibial (Medial Plantar)", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Abductor Digiti Minimi (Foot)", nerve: "Tibial (Lateral Plantar)", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Tibialis Anterior", nerve: "Deep Peroneal", roots: ["L4", "L5"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Extensor Hallucis Longus", nerve: "Deep Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Extensor Digitorum Longus", nerve: "Deep Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Extensor Digitorum Brevis", nerve: "Deep Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Peroneus Longus", nerve: "Superficial Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal" },
+                    { name: "Peroneus Brevis", nerve: "Superficial Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal" }
                 ],
                 nerves: [
-                    {
-                        name: "Femoral Nerve",
-                        roots: ["L2", "L3", "L4"],
-                        plexus: "Lumbar plexus (posterior divisions of L2-L4)",
-                        muscles: ["Iliopsoas", "Quadriceps Femoris", "Sartorius"]
-                    },
-                    {
-                        name: "Obturator Nerve",
-                        roots: ["L2", "L3", "L4"],
-                        plexus: "Lumbar plexus (anterior divisions of L2-L4)",
-                        muscles: ["Adductor Longus", "Adductor Magnus (Anterior)", "Gracilis"]
-                    },
-                    {
-                        name: "Sciatic Nerve",
-                        roots: ["L4", "L5", "S1", "S2", "S3"],
-                        plexus: "Sacral plexus (lumbosacral trunk L4-L5 + anterior rami S1-S3)",
-                        muscles: ["Biceps Femoris (Long Head)", "Biceps Femoris (Short Head)", "Semitendinosus", "Semimembranosus", "Adductor Magnus (Posterior)"]
-                    },
-                    {
-                        name: "Tibial Nerve",
-                        roots: ["L4", "L5", "S1", "S2", "S3"],
-                        plexus: "Sacral plexus → medial division of Sciatic",
-                        muscles: ["Gastrocnemius", "Soleus", "Tibialis Posterior", "Flexor Digitorum Longus", "Flexor Hallucis Longus", "Abductor Hallucis", "Abductor Digiti Minimi (Foot)"]
-                    },
-                    {
-                        name: "Common Peroneal Nerve",
-                        roots: ["L4", "L5", "S1", "S2"],
-                        plexus: "Sacral plexus → lateral division of Sciatic",
-                        muscles: ["Biceps Femoris (Short Head)"]
-                    },
-                    {
-                        name: "Deep Peroneal Nerve",
-                        roots: ["L4", "L5", "S1"],
-                        plexus: "Branch of Common Peroneal",
-                        muscles: ["Tibialis Anterior", "Extensor Hallucis Longus", "Extensor Digitorum Longus", "Extensor Digitorum Brevis"]
-                    },
-                    {
-                        name: "Superficial Peroneal Nerve",
-                        roots: ["L5", "S1"],
-                        plexus: "Branch of Common Peroneal",
-                        muscles: ["Peroneus Longus", "Peroneus Brevis"]
-                    },
-                    {
-                        name: "Superior Gluteal Nerve",
-                        roots: ["L4", "L5", "S1"],
-                        plexus: "Sacral plexus (exits above piriformis)",
-                        muscles: ["Gluteus Medius", "Gluteus Minimus", "Tensor Fasciae Latae"]
-                    },
-                    {
-                        name: "Inferior Gluteal Nerve",
-                        roots: ["L5", "S1", "S2"],
-                        plexus: "Sacral plexus (exits below piriformis)",
-                        muscles: ["Gluteus Maximus"]
-                    }
+                    { name: "Femoral Nerve", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus (posterior divisions of L2-L4)", muscles: ["Iliopsoas", "Quadriceps Femoris", "Sartorius"] },
+                    { name: "Obturator Nerve", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus (anterior divisions of L2-L4)", muscles: ["Adductor Longus", "Adductor Magnus (Anterior)", "Gracilis"] },
+                    { name: "Sciatic Nerve", roots: ["L4", "L5", "S1", "S2", "S3"], plexus: "Sacral plexus (lumbosacral trunk L4-L5 + anterior rami S1-S3)", muscles: ["Biceps Femoris (Long Head)", "Biceps Femoris (Short Head)", "Semitendinosus", "Semimembranosus", "Adductor Magnus (Posterior)"] },
+                    { name: "Tibial Nerve", roots: ["L4", "L5", "S1", "S2", "S3"], plexus: "Sacral plexus → medial division of Sciatic", muscles: ["Gastrocnemius", "Soleus", "Tibialis Posterior", "Flexor Digitorum Longus", "Flexor Hallucis Longus", "Abductor Hallucis", "Abductor Digiti Minimi (Foot)"] },
+                    { name: "Common Peroneal Nerve", roots: ["L4", "L5", "S1", "S2"], plexus: "Sacral plexus → lateral division of Sciatic", muscles: ["Biceps Femoris (Short Head)"] },
+                    { name: "Deep Peroneal Nerve", roots: ["L4", "L5", "S1"], plexus: "Branch of Common Peroneal", muscles: ["Tibialis Anterior", "Extensor Hallucis Longus", "Extensor Digitorum Longus", "Extensor Digitorum Brevis"] },
+                    { name: "Superficial Peroneal Nerve", roots: ["L5", "S1"], plexus: "Branch of Common Peroneal", muscles: ["Peroneus Longus", "Peroneus Brevis"] },
+                    { name: "Superior Gluteal Nerve", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus (exits above piriformis)", muscles: ["Gluteus Medius", "Gluteus Minimus", "Tensor Fasciae Latae"] },
+                    { name: "Inferior Gluteal Nerve", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus (exits below piriformis)", muscles: ["Gluteus Maximus"] }
                 ]
             }
+        };
+
+        // Brachial Plexus Level Data
+        const brachialPlexusLevels = {
+            trunks: [
+                {
+                    id: "upper-trunk",
+                    name: "Upper Trunk",
+                    roots: ["C5", "C6"],
+                    type: "trunk",
+                    sensoryNCS: ["LAC (Lateral Antebrachial Cutaneous)", "Median to Thumb"],
+                    motorNCS: [],
+                    emgMuscles: ["Infraspinatus", "Deltoid", "Biceps"],
+                    clinical: "Weakness in shoulder abduction and external rotation, elbow flexion. Decreased bicep and brachioradialis reflexes. Sensory loss over lateral arm and forearm."
+                },
+                {
+                    id: "middle-trunk",
+                    name: "Middle Trunk",
+                    roots: ["C7"],
+                    type: "trunk",
+                    sensoryNCS: ["Median to Index Finger (80% of time)"],
+                    motorNCS: [],
+                    emgMuscles: ["Triceps", "FCR (Flexor Carpi Radialis)", "EDC (Extensor Digitorum Communis)"],
+                    clinical: "Weakness in elbow extension, wrist extension and flexion. Decreased triceps reflex. Sensory changes may affect middle finger."
+                },
+                {
+                    id: "lower-trunk",
+                    name: "Lower Trunk",
+                    roots: ["C8", "T1"],
+                    type: "trunk",
+                    sensoryNCS: ["Ulnar to Digit 5", "MAC (Medial Antebrachial Cutaneous)"],
+                    motorNCS: ["Median (APB) - abnormal", "Ulnar (ADM) - abnormal"],
+                    emgMuscles: ["FDI (First Dorsal Interosseous)", "APB (Abductor Pollicis Brevis)", "EIP (Extensor Indicis Proprius)"],
+                    clinical: "Weakness of hand intrinsics (grip, fine motor). Sensory loss over medial arm and forearm. May see Horner syndrome if T1 root involved proximally."
+                }
+            ],
+            cords: [
+                {
+                    id: "lateral-cord",
+                    name: "Lateral Cord",
+                    roots: ["C5", "C6", "C7"],
+                    type: "cord",
+                    sensoryNCS: ["LAC (Lateral Antebrachial Cutaneous)", "Median to Thumb", "Median to Index Finger"],
+                    motorNCS: [],
+                    emgMuscles: ["Biceps", "Pronator Teres"],
+                    clinical: "Weakness of elbow flexion (biceps), forearm pronation. Lateral cord gives rise to lateral contribution to median nerve and musculocutaneous nerve."
+                },
+                {
+                    id: "medial-cord",
+                    name: "Medial Cord",
+                    roots: ["C8", "T1"],
+                    type: "cord",
+                    sensoryNCS: ["Ulnar to Digit 5", "MAC (Medial Antebrachial Cutaneous)"],
+                    motorNCS: ["Median (APB)", "Ulnar (ADM)"],
+                    emgMuscles: ["FDI (First Dorsal Interosseous)", "APB (Abductor Pollicis Brevis)"],
+                    clinical: "Weakness of hand intrinsics (both median and ulnar innervated). Medial cord gives rise to ulnar nerve and medial contribution to median nerve."
+                },
+                {
+                    id: "posterior-cord",
+                    name: "Posterior Cord",
+                    roots: ["C5", "C6", "C7", "C8"],
+                    type: "cord",
+                    sensoryNCS: ["Superficial Radial"],
+                    motorNCS: ["Radial to EIP (Extensor Indicis Proprius)"],
+                    emgMuscles: ["Deltoid", "EIP (Extensor Indicis Proprius)", "Triceps"],
+                    clinical: "Weakness of shoulder abduction (deltoid), elbow/wrist/finger extension. Posterior cord gives rise to radial nerve, axillary nerve, thoracodorsal nerve, and subscapular nerves."
+                }
+            ]
         };
 
         let currentExtremity = 'upper';
         let selectedItem = null;
         let selectedType = null;
+        let selectedPlexusLevel = null;
 
         // Initialize the app
         function init() {
@@ -1230,6 +1311,8 @@
             renderNerves('upper');
             renderMuscles('lower');
             renderNerves('lower');
+            renderPlexusLevels();
+            renderGuideTable();
             setupEventListeners();
         }
 
@@ -1263,12 +1346,69 @@
             `).join('');
         }
 
+        function renderPlexusLevels() {
+            const trunkContainer = document.getElementById('trunk-levels');
+            const cordContainer = document.getElementById('cord-levels');
+
+            trunkContainer.innerHTML = brachialPlexusLevels.trunks.map(level => renderLevelCard(level)).join('');
+            cordContainer.innerHTML = brachialPlexusLevels.cords.map(level => renderLevelCard(level)).join('');
+        }
+
+        function renderLevelCard(level) {
+            return `
+                <div class="level-card ${level.type}" data-level="${level.id}" onclick="selectPlexusLevel('${level.id}')">
+                    <div class="level-name">${level.name}</div>
+                    <div class="level-roots">
+                        ${level.roots.map(r => `<span class="root-badge">${r}</span>`).join('')}
+                    </div>
+                    <div class="level-summary">
+                        <div class="level-summary-item">
+                            <div class="level-summary-label">Sensory</div>
+                            <div class="level-summary-value">${level.sensoryNCS.length} NCS</div>
+                        </div>
+                        <div class="level-summary-item">
+                            <div class="level-summary-label">Motor</div>
+                            <div class="level-summary-value">${level.motorNCS.length || '—'}</div>
+                        </div>
+                        <div class="level-summary-item">
+                            <div class="level-summary-label">EMG</div>
+                            <div class="level-summary-value">${level.emgMuscles.length} muscles</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderGuideTable() {
+            const tbody = document.getElementById('guide-table-body');
+            const allLevels = [...brachialPlexusLevels.trunks, ...brachialPlexusLevels.cords];
+
+            tbody.innerHTML = allLevels.map(level => `
+                <tr class="${level.type}-row" onclick="selectPlexusLevel('${level.id}')" style="cursor: pointer;">
+                    <td class="level-col">${level.name}</td>
+                    <td>${level.roots.join(', ')}</td>
+                    <td>${level.sensoryNCS.map(s => `<div>• ${s}</div>`).join('')}</td>
+                    <td>${level.motorNCS.length ? level.motorNCS.map(m => `<div>• ${m}</div>`).join('') : '—'}</td>
+                    <td>${level.emgMuscles.map(m => `<div>• ${m}</div>`).join('')}</td>
+                    <td style="font-size: 0.8rem;">${level.clinical}</td>
+                </tr>
+            `).join('');
+        }
+
         function setupEventListeners() {
-            // Tab switching
+            // Main tab switching
             document.querySelectorAll('.extremity-tab').forEach(tab => {
                 tab.addEventListener('click', () => {
                     const extremity = tab.dataset.extremity;
                     switchExtremity(extremity);
+                });
+            });
+
+            // Sub-tab switching for plexus section
+            document.querySelectorAll('.sub-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const subtab = tab.dataset.subtab;
+                    switchSubtab(subtab);
                 });
             });
 
@@ -1291,10 +1431,20 @@
             // Update content visibility
             document.getElementById('upper-content').classList.toggle('hidden', extremity !== 'upper');
             document.getElementById('lower-content').classList.toggle('hidden', extremity !== 'lower');
+            document.getElementById('plexus-content').classList.toggle('hidden', extremity !== 'plexus');
 
             // Clear selection
             clearSelection();
             closeDetailPanel();
+        }
+
+        function switchSubtab(subtab) {
+            document.querySelectorAll('.sub-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.subtab === subtab);
+            });
+
+            document.getElementById('levels-view').classList.toggle('hidden', subtab !== 'levels');
+            document.getElementById('guide-view').classList.toggle('hidden', subtab !== 'guide');
         }
 
         function handleItemClick(element) {
@@ -1302,10 +1452,7 @@
             const name = element.dataset.name;
             const extremity = element.dataset.extremity;
 
-            // Clear previous selection
             clearSelection();
-
-            // Set new selection
             element.classList.add('selected');
             selectedItem = name;
             selectedType = type;
@@ -1321,10 +1468,73 @@
             }
         }
 
+        function selectPlexusLevel(levelId) {
+            // Clear previous selection
+            document.querySelectorAll('.level-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('.plexus-diagram .clickable').forEach(el => el.classList.remove('selected'));
+
+            // Find the level
+            const allLevels = [...brachialPlexusLevels.trunks, ...brachialPlexusLevels.cords];
+            const level = allLevels.find(l => l.id === levelId);
+
+            if (!level) return;
+
+            // Select in cards
+            const card = document.querySelector(`.level-card[data-level="${levelId}"]`);
+            if (card) card.classList.add('selected');
+
+            // Select in diagram
+            const diagramEl = document.querySelector(`.clickable[data-level="${levelId}"]`);
+            if (diagramEl) diagramEl.classList.add('selected');
+
+            selectedPlexusLevel = levelId;
+            showPlexusLevelDetail(level);
+        }
+
+        function showPlexusLevelDetail(level) {
+            const panel = document.getElementById('detail-panel');
+            const info = document.getElementById('detail-info');
+
+            panel.classList.add('plexus-panel');
+
+            info.innerHTML = `
+                <div class="detail-title">${level.name}</div>
+                <div class="detail-subtitle">${level.type === 'trunk' ? 'Trunk Level' : 'Cord Level'} • Roots: ${level.roots.join(', ')}</div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Sensory NCS</div>
+                        <div class="ncs-list">
+                            ${level.sensoryNCS.map(s => `<span class="sensory-badge">${s}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Motor NCS</div>
+                        <div class="ncs-list">
+                            ${level.motorNCS.length ? level.motorNCS.map(m => `<span class="motor-badge">${m}</span>`).join('') : '<span style="color: var(--text-muted);">—</span>'}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">EMG Muscles</div>
+                        <div class="ncs-list">
+                            ${level.emgMuscles.map(m => `<span class="emg-badge">${m}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="detail-item full-width">
+                        <div class="detail-label">Clinical Findings</div>
+                        <div class="detail-value clinical">${level.clinical}</div>
+                    </div>
+                </div>
+            `;
+
+            panel.classList.add('visible');
+        }
+
         function clearSelection() {
             document.querySelectorAll('.item').forEach(item => {
                 item.classList.remove('selected', 'highlighted');
             });
+            document.querySelectorAll('.level-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('.plexus-diagram .clickable').forEach(el => el.classList.remove('selected'));
         }
 
         function highlightRelatedNerve(nerveName, extremity) {
@@ -1348,6 +1558,8 @@
         function showMuscleDetail(muscle, extremity) {
             const panel = document.getElementById('detail-panel');
             const info = document.getElementById('detail-info');
+
+            panel.classList.remove('plexus-panel');
 
             info.innerHTML = `
                 <div class="detail-title">${muscle.name}</div>
@@ -1373,6 +1585,8 @@
         function showNerveDetail(nerve, extremity) {
             const panel = document.getElementById('detail-panel');
             const info = document.getElementById('detail-info');
+
+            panel.classList.remove('plexus-panel');
 
             info.innerHTML = `
                 <div class="detail-title">${nerve.name}</div>
@@ -1406,7 +1620,9 @@
         }
 
         function closeDetailPanel() {
-            document.getElementById('detail-panel').classList.remove('visible');
+            const panel = document.getElementById('detail-panel');
+            panel.classList.remove('visible');
+            panel.classList.remove('plexus-panel');
         }
 
         // Initialize on load
