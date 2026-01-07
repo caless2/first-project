@@ -640,6 +640,66 @@
             gap: 0.25rem;
         }
 
+        /* Mnemonic Box Styles */
+        .mnemonic-box {
+            background: linear-gradient(135deg, #faf5ff 0%, #f0e6ff 100%);
+            border: 2px solid var(--purple);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .mnemonic-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .mnemonic-list {
+            text-align: left;
+        }
+
+        .mnemonic-item {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(128, 90, 213, 0.2);
+            font-size: 1rem;
+        }
+
+        .mnemonic-item:last-child {
+            border-bottom: none;
+        }
+
+        .mnemonic-letter {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background: var(--purple);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 28px;
+            font-weight: 700;
+            margin-right: 0.75rem;
+        }
+
+        .mnemonic-nerve {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Level Card for Lumbosacral */
+        .level-card.lumbar {
+            border-left: 4px solid #3182ce;
+        }
+
+        .level-card.sacral {
+            border-left: 4px solid #e53e3e;
+        }
+
         /* Image Viewer Styles */
         .image-viewer {
             background: var(--card-bg);
@@ -810,6 +870,7 @@
             <button class="extremity-tab active" data-extremity="upper">Upper Extremity</button>
             <button class="extremity-tab" data-extremity="lower">Lower Extremity</button>
             <button class="extremity-tab plexus-tab" data-extremity="plexus">Brachial Plexus</button>
+            <button class="extremity-tab plexus-tab" data-extremity="lumbosacral">Lumbosacral Plexus</button>
         </div>
 
         <!-- Upper Extremity Content -->
@@ -1302,6 +1363,244 @@
                 </div>
             </div>
         </div>
+
+        <!-- Lumbosacral Plexus Section -->
+        <div id="lumbosacral-content" class="hidden">
+            <div class="sub-tabs">
+                <button class="sub-tab active" data-subtab="ls-levels">By Anatomical Level</button>
+                <button class="sub-tab" data-subtab="ls-guide">Complete Guide</button>
+            </div>
+
+            <!-- Mnemonic Section -->
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header purple">Lumbar Plexus Mnemonic</div>
+                <div class="diagram-container" style="padding: 1.5rem;">
+                    <div class="mnemonic-box">
+                        <div class="mnemonic-title">"I Twice Get Laid On Friday"</div>
+                        <div class="mnemonic-list">
+                            <div class="mnemonic-item"><span class="mnemonic-letter">I</span> - <span class="mnemonic-nerve">Iliohypogastric (L1)</span></div>
+                            <div class="mnemonic-item"><span class="mnemonic-letter">I</span> - <span class="mnemonic-nerve">Ilioinguinal (L1)</span></div>
+                            <div class="mnemonic-item"><span class="mnemonic-letter">G</span> - <span class="mnemonic-nerve">Genitofemoral (L1-L2)</span></div>
+                            <div class="mnemonic-item"><span class="mnemonic-letter">L</span> - <span class="mnemonic-nerve">Lateral Femoral Cutaneous (L2-L3)</span></div>
+                            <div class="mnemonic-item"><span class="mnemonic-letter">O</span> - <span class="mnemonic-nerve">Obturator (L2-L4)</span></div>
+                            <div class="mnemonic-item"><span class="mnemonic-letter">F</span> - <span class="mnemonic-nerve">Femoral (L2-L4)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full Lumbosacral Plexus Diagram -->
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header purple">Full Lumbosacral Plexus Diagram</div>
+                <div class="diagram-container" style="padding: 1.5rem;">
+                    <img src="lumbosacral_images/lumbosacral_plexus_anatomy.png"
+                         alt="Full Lumbosacral Plexus Diagram"
+                         style="max-width: 100%; height: auto; border-radius: 8px; cursor: pointer; box-shadow: var(--shadow);"
+                         onclick="openLightbox('lumbosacral_images/lumbosacral_plexus_anatomy.png', 'Full Lumbosacral Plexus Diagram')">
+                    <p style="text-align: center; margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">
+                        Click image to enlarge. Select a level below to see specific diagrams.
+                    </p>
+                </div>
+            </div>
+
+            <!-- By Level View -->
+            <div id="ls-levels-view" class="plexus-content">
+                <div class="section">
+                    <div class="section-header purple">Upper Lumbosacral (Lumbar Plexus) - L1-L4</div>
+                    <div class="section-content" id="lumbar-levels"></div>
+                </div>
+                <div class="section">
+                    <div class="section-header purple">Lower Lumbosacral (Sacral Plexus) - L4-S3</div>
+                    <div class="section-content" id="sacral-levels"></div>
+                </div>
+            </div>
+
+            <!-- Complete Guide View -->
+            <div id="ls-guide-view" class="hidden">
+                <div class="section">
+                    <div class="section-header purple">Complete Lumbosacral Plexus Reference</div>
+                    <div class="section-content tall" style="max-height: none; overflow-x: auto;">
+                        <table class="guide-table">
+                            <thead>
+                                <tr>
+                                    <th>Level</th>
+                                    <th>Roots</th>
+                                    <th>Sensory NCS</th>
+                                    <th>Motor NCS</th>
+                                    <th>EMG Muscles</th>
+                                    <th>Clinical Findings</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ls-guide-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Viewer Section for Lumbosacral -->
+            <div class="image-viewer" id="ls-image-viewer">
+                <div class="image-viewer-header">
+                    <span class="image-viewer-title" id="ls-image-viewer-title">Anatomical Diagrams</span>
+                    <button class="image-viewer-close" onclick="closeLSImageViewer()">×</button>
+                </div>
+                <div class="image-viewer-content" id="ls-image-viewer-content">
+                    <!-- Images will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Interactive Diagram Section -->
+            <div class="section" style="margin-top: 1.5rem;">
+                <div class="section-header purple">Interactive Lumbosacral Plexus Diagram</div>
+                <div class="diagram-container">
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">Click on nerve branches to see details</p>
+                    <svg class="plexus-diagram" viewBox="0 0 450 500" id="interactive-ls-plexus-svg">
+                        <!-- Lumbar Roots -->
+                        <text x="15" y="45">L1</text>
+                        <circle class="root" cx="45" cy="40" r="14"/>
+                        <text x="15" y="90">L2</text>
+                        <circle class="root" cx="45" cy="85" r="14"/>
+                        <text x="15" y="135">L3</text>
+                        <circle class="root" cx="45" cy="130" r="14"/>
+                        <text x="15" y="180">L4</text>
+                        <circle class="root" cx="45" cy="175" r="14"/>
+                        <text x="15" y="240">L5</text>
+                        <circle class="root" cx="45" cy="235" r="14"/>
+
+                        <!-- Sacral Roots -->
+                        <text x="15" y="300">S1</text>
+                        <circle class="root" cx="45" cy="295" r="14"/>
+                        <text x="15" y="350">S2</text>
+                        <circle class="root" cx="45" cy="345" r="14"/>
+                        <text x="15" y="400">S3</text>
+                        <circle class="root" cx="45" cy="395" r="14"/>
+
+                        <!-- Lumbar Plexus Label -->
+                        <text x="100" y="20" style="font-size: 12px; fill: #805ad5; font-weight: 700;">LUMBAR PLEXUS (L1-L4)</text>
+
+                        <!-- Iliohypogastric -->
+                        <path class="connector" d="M59,40 Q90,35 120,35"/>
+                        <g class="clickable" data-level="iliohypogastric" onclick="selectLSPlexusLevel('iliohypogastric')">
+                            <rect class="nerve" x="120" y="22" width="105" height="26" rx="4"/>
+                            <text class="label" x="128" y="40">Iliohypogastric</text>
+                        </g>
+
+                        <!-- Ilioinguinal -->
+                        <path class="connector" d="M59,40 Q90,55 120,60"/>
+                        <g class="clickable" data-level="ilioinguinal" onclick="selectLSPlexusLevel('ilioinguinal')">
+                            <rect class="nerve" x="120" y="48" width="85" height="26" rx="4"/>
+                            <text class="label" x="132" y="66">Ilioinguinal</text>
+                        </g>
+
+                        <!-- Genitofemoral -->
+                        <path class="connector" d="M59,40 Q80,70 100,85"/>
+                        <path class="connector" d="M59,85 Q80,85 100,85"/>
+                        <g class="clickable" data-level="genitofemoral" onclick="selectLSPlexusLevel('genitofemoral')">
+                            <rect class="nerve" x="100" y="77" width="100" height="26" rx="4"/>
+                            <text class="label" x="112" y="95">Genitofemoral</text>
+                        </g>
+
+                        <!-- Lateral Femoral Cutaneous -->
+                        <path class="connector" d="M59,85 Q90,105 130,115"/>
+                        <path class="connector" d="M59,130 Q90,120 130,115"/>
+                        <g class="clickable" data-level="lat-fem-cut" onclick="selectLSPlexusLevel('lat-fem-cut')">
+                            <rect class="nerve" x="130" y="105" width="115" height="26" rx="4"/>
+                            <text class="label" x="138" y="123">Lat Fem Cutaneous</text>
+                        </g>
+
+                        <!-- Femoral Nerve -->
+                        <path class="connector" d="M59,85 Q100,130 150,150"/>
+                        <path class="connector" d="M59,130 Q100,145 150,150"/>
+                        <path class="connector" d="M59,175 Q100,165 150,155"/>
+                        <g class="clickable" data-level="femoral" onclick="selectLSPlexusLevel('femoral')">
+                            <rect class="cord" x="150" y="140" width="70" height="35" rx="6"/>
+                            <text class="label" x="162" y="163">Femoral</text>
+                        </g>
+
+                        <!-- Obturator Nerve -->
+                        <path class="connector" d="M59,85 Q80,165 120,190"/>
+                        <path class="connector" d="M59,130 Q90,170 120,190"/>
+                        <path class="connector" d="M59,175 Q90,185 120,190"/>
+                        <g class="clickable" data-level="obturator" onclick="selectLSPlexusLevel('obturator')">
+                            <rect class="cord" x="120" y="180" width="80" height="35" rx="6"/>
+                            <text class="label" x="132" y="203">Obturator</text>
+                        </g>
+
+                        <!-- Sacral Plexus Label -->
+                        <text x="100" y="250" style="font-size: 12px; fill: #805ad5; font-weight: 700;">SACRAL PLEXUS (L4-S3)</text>
+
+                        <!-- Lumbosacral Trunk -->
+                        <path class="connector" d="M59,175 Q75,215 100,240"/>
+                        <path class="connector" d="M59,235 Q80,240 100,245"/>
+                        <rect class="trunk" x="100" y="230" width="100" height="28" rx="4"/>
+                        <text class="label" x="105" y="249" style="font-size: 8px;">Lumbosacral Trunk</text>
+
+                        <!-- Superior Gluteal -->
+                        <path class="connector" d="M200,244 Q250,245 280,260"/>
+                        <g class="clickable" data-level="sup-gluteal" onclick="selectLSPlexusLevel('sup-gluteal')">
+                            <rect class="nerve" x="280" y="248" width="110" height="26" rx="4"/>
+                            <text class="label" x="290" y="266">Superior Gluteal</text>
+                        </g>
+
+                        <!-- Inferior Gluteal -->
+                        <path class="connector" d="M59,295 Q180,280 280,285"/>
+                        <g class="clickable" data-level="inf-gluteal" onclick="selectLSPlexusLevel('inf-gluteal')">
+                            <rect class="nerve" x="280" y="278" width="105" height="26" rx="4"/>
+                            <text class="label" x="290" y="296">Inferior Gluteal</text>
+                        </g>
+
+                        <!-- Sciatic Nerve -->
+                        <path class="connector" d="M200,258 Q220,300 250,330"/>
+                        <path class="connector" d="M59,295 Q150,310 250,335"/>
+                        <path class="connector" d="M59,345 Q150,345 250,340"/>
+                        <g class="clickable" data-level="sciatic" onclick="selectLSPlexusLevel('sciatic')">
+                            <rect class="cord" x="250" y="318" width="70" height="40" rx="6"/>
+                            <text class="label" x="268" y="343">Sciatic</text>
+                        </g>
+
+                        <!-- Common Peroneal -->
+                        <path class="connector" d="M320,338 Q360,365 380,395"/>
+                        <g class="clickable" data-level="common-peroneal" onclick="selectLSPlexusLevel('common-peroneal')">
+                            <rect class="nerve" x="360" y="395" width="80" height="30" rx="4"/>
+                            <text class="label" x="365" y="410" style="font-size: 7px;">Common</text>
+                            <text class="label" x="365" y="420" style="font-size: 7px;">Peroneal</text>
+                        </g>
+
+                        <!-- Tibial -->
+                        <path class="connector" d="M320,358 Q340,400 350,440"/>
+                        <g class="clickable" data-level="tibial" onclick="selectLSPlexusLevel('tibial')">
+                            <rect class="nerve" x="330" y="440" width="65" height="30" rx="4"/>
+                            <text class="label" x="345" y="460">Tibial</text>
+                        </g>
+
+                        <!-- Pudendal -->
+                        <path class="connector" d="M59,345 Q90,390 130,420"/>
+                        <path class="connector" d="M59,395 Q90,410 130,420"/>
+                        <g class="clickable" data-level="pudendal" onclick="selectLSPlexusLevel('pudendal')">
+                            <rect class="nerve" x="130" y="408" width="75" height="28" rx="4"/>
+                            <text class="label" x="142" y="427">Pudendal</text>
+                        </g>
+                    </svg>
+                    <div class="diagram-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: var(--accent);"></div>
+                            <span>Roots</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #805ad5;"></div>
+                            <span>Trunks</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #38a169;"></div>
+                            <span>Major Nerves (click)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: #e53e3e;"></div>
+                            <span>Terminal Nerves (click)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Detail Panel -->
@@ -1508,6 +1807,175 @@
             ]
         };
 
+        // Lumbosacral Plexus Level Data
+        const lumbosacralPlexusLevels = {
+            lumbar: [
+                {
+                    id: "iliohypogastric",
+                    name: "Iliohypogastric Nerve",
+                    roots: ["L1"],
+                    type: "lumbar",
+                    sensoryNCS: ["Not routinely tested"],
+                    motorNCS: [],
+                    emgMuscles: ["Internal Oblique", "Transverse Abdominis"],
+                    clinical: "Sensory loss over lower abdominal wall and lateral gluteal region. May cause lower abdominal wall weakness. Often injured during lower abdominal surgery.",
+                    images: {
+                        anatomy: { src: "lumbosacral_images/lumbar_plexus_sensory_territory.png", label: "Lumbar Plexus Sensory Territory" }
+                    }
+                },
+                {
+                    id: "ilioinguinal",
+                    name: "Ilioinguinal Nerve",
+                    roots: ["L1"],
+                    type: "lumbar",
+                    sensoryNCS: ["Not routinely tested"],
+                    motorNCS: [],
+                    emgMuscles: ["Internal Oblique", "Transverse Abdominis"],
+                    clinical: "Sensory loss over medial thigh, mons pubis, and scrotum/labia. Often injured during inguinal hernia repair or appendectomy.",
+                    images: {
+                        anatomy: { src: "lumbosacral_images/lumbar_plexus_sensory_territory.png", label: "Lumbar Plexus Sensory Territory" }
+                    }
+                },
+                {
+                    id: "genitofemoral",
+                    name: "Genitofemoral Nerve",
+                    roots: ["L1", "L2"],
+                    type: "lumbar",
+                    sensoryNCS: ["Not routinely tested"],
+                    motorNCS: [],
+                    emgMuscles: ["Cremaster (genital branch)"],
+                    clinical: "Genital branch: motor to cremaster (cremasteric reflex). Femoral branch: sensory to femoral triangle. May cause groin pain if entrapped.",
+                    images: {
+                        anatomy: { src: "lumbosacral_images/lumbar_plexus_sensory_territory.png", label: "Lumbar Plexus Sensory Territory" }
+                    }
+                },
+                {
+                    id: "lat-fem-cut",
+                    name: "Lateral Femoral Cutaneous Nerve",
+                    roots: ["L2", "L3"],
+                    type: "lumbar",
+                    sensoryNCS: ["LFCN SNAP (lateral thigh)"],
+                    motorNCS: [],
+                    emgMuscles: [],
+                    clinical: "Purely sensory nerve. Meralgia paresthetica: burning, numbness, tingling over lateral thigh. Caused by compression at inguinal ligament. Associated with obesity, tight clothing, pregnancy.",
+                    images: {
+                        sensory: { src: "lumbosacral_images/lateral_femoral_cutaneous_territory.png", label: "Lateral Femoral Cutaneous Territory" },
+                        dermatomes: { src: "lumbosacral_images/leg_dermatome_map.png", label: "Leg Dermatome Map" }
+                    }
+                },
+                {
+                    id: "obturator",
+                    name: "Obturator Nerve",
+                    roots: ["L2", "L3", "L4"],
+                    type: "lumbar",
+                    sensoryNCS: ["Not routinely tested (medial thigh)"],
+                    motorNCS: [],
+                    emgMuscles: ["Adductor Longus", "Adductor Magnus (anterior)", "Gracilis"],
+                    clinical: "Weakness of thigh adduction. Sensory loss over medial thigh. May be injured during pelvic surgery or by pelvic masses. Obturator sign in appendicitis.",
+                    images: {
+                        anatomy: { src: "lumbosacral_images/lumbar_plexus_sensory_territory.png", label: "Lumbar Plexus Overview" }
+                    }
+                },
+                {
+                    id: "femoral",
+                    name: "Femoral Nerve",
+                    roots: ["L2", "L3", "L4"],
+                    type: "lumbar",
+                    sensoryNCS: ["Saphenous SNAP (medial leg/ankle)"],
+                    motorNCS: ["Femoral motor to Quadriceps (Rectus Femoris)"],
+                    emgMuscles: ["Iliopsoas", "Rectus Femoris", "Vastus Lateralis", "Vastus Medialis"],
+                    clinical: "Weakness of hip flexion and knee extension. Loss of knee jerk reflex. Sensory loss over anterior thigh and medial leg (saphenous). Common injury sites: inguinal ligament, retroperitoneal hematoma, hip surgery.",
+                    images: {
+                        sensory: { src: "lumbosacral_images/femoral_sensory_territory.png", label: "Femoral/Saphenous Sensory Territory" },
+                        anatomy: { src: "lumbosacral_images/lumbar_plexus_sensory_territory.png", label: "Lumbar Plexus Overview" }
+                    }
+                }
+            ],
+            sacral: [
+                {
+                    id: "sup-gluteal",
+                    name: "Superior Gluteal Nerve",
+                    roots: ["L4", "L5", "S1"],
+                    type: "sacral",
+                    sensoryNCS: [],
+                    motorNCS: [],
+                    emgMuscles: ["Gluteus Medius", "Gluteus Minimus", "Tensor Fasciae Latae"],
+                    clinical: "Weakness of hip abduction causing Trendelenburg gait (pelvis drops on opposite side). No sensory component. May be injured during hip surgery or intramuscular injections.",
+                    images: {
+                        anatomy: { src: "lumbosacral_images/sacral_plexus_diagram.png", label: "Sacral Plexus Anatomy" }
+                    }
+                },
+                {
+                    id: "inf-gluteal",
+                    name: "Inferior Gluteal Nerve",
+                    roots: ["L5", "S1", "S2"],
+                    type: "sacral",
+                    sensoryNCS: [],
+                    motorNCS: [],
+                    emgMuscles: ["Gluteus Maximus"],
+                    clinical: "Weakness of hip extension. Difficulty rising from seated position, climbing stairs. No sensory component. May be injured during hip replacement surgery.",
+                    images: {
+                        anatomy: { src: "lumbosacral_images/sacral_plexus_diagram.png", label: "Sacral Plexus Anatomy" }
+                    }
+                },
+                {
+                    id: "sciatic",
+                    name: "Sciatic Nerve",
+                    roots: ["L4", "L5", "S1", "S2", "S3"],
+                    type: "sacral",
+                    sensoryNCS: ["Sural SNAP", "Superficial Peroneal SNAP"],
+                    motorNCS: ["Peroneal motor to EDB", "Tibial motor to AH"],
+                    emgMuscles: ["Biceps Femoris (short head)", "Tibialis Anterior", "Gastrocnemius", "Tibialis Posterior"],
+                    clinical: "Complete lesion: weakness of knee flexion, all movements below knee, foot drop. Sensory loss below knee except medial leg. May be injured by hip fracture, injection injury, piriformis syndrome.",
+                    images: {
+                        sensory: { src: "lumbosacral_images/sciatic_sensory_posterior.png", label: "Sciatic Sensory Territory" },
+                        anatomy: { src: "lumbosacral_images/sacral_plexus_diagram.png", label: "Sacral Plexus Anatomy" }
+                    }
+                },
+                {
+                    id: "common-peroneal",
+                    name: "Common Peroneal Nerve",
+                    roots: ["L4", "L5", "S1", "S2"],
+                    type: "sacral",
+                    sensoryNCS: ["Superficial Peroneal SNAP (lateral leg/dorsum foot)"],
+                    motorNCS: ["Peroneal motor to EDB", "Peroneal motor to Tibialis Anterior"],
+                    emgMuscles: ["Tibialis Anterior", "Peroneus Longus", "Extensor Hallucis Longus", "Extensor Digitorum Brevis"],
+                    clinical: "Foot drop with steppage gait. Weakness of ankle dorsiflexion and eversion. Sensory loss over lateral leg and dorsum of foot. Common injury at fibular head from compression, leg crossing, casts.",
+                    images: {
+                        sensory: { src: "lumbosacral_images/sciatic_sensory_posterior.png", label: "Peroneal Sensory Territory" },
+                        dermatomes: { src: "lumbosacral_images/leg_dermatome_map.png", label: "Leg Dermatome Map" }
+                    }
+                },
+                {
+                    id: "tibial",
+                    name: "Tibial Nerve",
+                    roots: ["L4", "L5", "S1", "S2", "S3"],
+                    type: "sacral",
+                    sensoryNCS: ["Sural SNAP (lateral ankle/foot)", "Medial Plantar SNAP", "Lateral Plantar SNAP"],
+                    motorNCS: ["Tibial motor to Abductor Hallucis", "Tibial motor to Abductor Digiti Minimi"],
+                    emgMuscles: ["Gastrocnemius", "Tibialis Posterior", "Flexor Digitorum Longus", "Abductor Hallucis"],
+                    clinical: "Weakness of ankle plantar flexion and toe flexion. Sensory loss over sole of foot. Loss of ankle jerk reflex. Tarsal tunnel syndrome causes medial plantar symptoms.",
+                    images: {
+                        sensory: { src: "lumbosacral_images/sciatic_sensory_posterior.png", label: "Tibial Sensory Territory" },
+                        anatomy: { src: "lumbosacral_images/sacral_plexus_diagram.png", label: "Sacral Plexus Anatomy" }
+                    }
+                },
+                {
+                    id: "pudendal",
+                    name: "Pudendal Nerve",
+                    roots: ["S2", "S3", "S4"],
+                    type: "sacral",
+                    sensoryNCS: ["Pudendal SNAP (specialized)"],
+                    motorNCS: ["Pudendal motor (specialized EMG)"],
+                    emgMuscles: ["External Anal Sphincter", "External Urethral Sphincter", "Bulbospongiosus"],
+                    clinical: "Perineal sensory loss. Fecal and urinary incontinence. Erectile dysfunction. Pudendal nerve entrapment causes chronic pelvic pain (Alcock canal syndrome).",
+                    images: {
+                        anatomy: { src: "lumbosacral_images/sacral_plexus_diagram.png", label: "Sacral Plexus Anatomy" }
+                    }
+                }
+            ]
+        };
+
         let currentExtremity = 'upper';
         let selectedItem = null;
         let selectedType = null;
@@ -1521,6 +1989,8 @@
             renderNerves('lower');
             renderPlexusLevels();
             renderGuideTable();
+            renderLSPlexusLevels();
+            renderLSGuideTable();
             setupEventListeners();
         }
 
@@ -1603,6 +2073,167 @@
             `).join('');
         }
 
+        // Lumbosacral Plexus Functions
+        function renderLSPlexusLevels() {
+            const lumbarContainer = document.getElementById('lumbar-levels');
+            const sacralContainer = document.getElementById('sacral-levels');
+
+            lumbarContainer.innerHTML = lumbosacralPlexusLevels.lumbar.map(level => renderLSLevelCard(level)).join('');
+            sacralContainer.innerHTML = lumbosacralPlexusLevels.sacral.map(level => renderLSLevelCard(level)).join('');
+        }
+
+        function renderLSLevelCard(level) {
+            return `
+                <div class="level-card ${level.type}" data-level="${level.id}" onclick="selectLSPlexusLevel('${level.id}')">
+                    <div class="level-name">${level.name}</div>
+                    <div class="level-roots">
+                        ${level.roots.map(r => `<span class="root-badge">${r}</span>`).join('')}
+                    </div>
+                    <div class="level-summary">
+                        <div class="level-summary-item">
+                            <div class="level-summary-label">Sensory</div>
+                            <div class="level-summary-value">${level.sensoryNCS.length} NCS</div>
+                        </div>
+                        <div class="level-summary-item">
+                            <div class="level-summary-label">Motor</div>
+                            <div class="level-summary-value">${level.motorNCS.length || '—'}</div>
+                        </div>
+                        <div class="level-summary-item">
+                            <div class="level-summary-label">EMG</div>
+                            <div class="level-summary-value">${level.emgMuscles.length} muscles</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderLSGuideTable() {
+            const tbody = document.getElementById('ls-guide-table-body');
+            const allLevels = [...lumbosacralPlexusLevels.lumbar, ...lumbosacralPlexusLevels.sacral];
+
+            tbody.innerHTML = allLevels.map(level => `
+                <tr class="${level.type}-row" onclick="selectLSPlexusLevel('${level.id}')" style="cursor: pointer;">
+                    <td class="level-col">${level.name}</td>
+                    <td>${level.roots.join(', ')}</td>
+                    <td>${level.sensoryNCS.length ? level.sensoryNCS.map(s => `<div>• ${s}</div>`).join('') : '—'}</td>
+                    <td>${level.motorNCS.length ? level.motorNCS.map(m => `<div>• ${m}</div>`).join('') : '—'}</td>
+                    <td>${level.emgMuscles.length ? level.emgMuscles.map(m => `<div>• ${m}</div>`).join('') : '—'}</td>
+                    <td style="font-size: 0.8rem;">${level.clinical}</td>
+                </tr>
+            `).join('');
+        }
+
+        function selectLSPlexusLevel(levelId) {
+            // Clear previous selection
+            document.querySelectorAll('#lumbosacral-content .level-card').forEach(card => card.classList.remove('selected'));
+            document.querySelectorAll('#interactive-ls-plexus-svg .clickable').forEach(el => el.classList.remove('selected'));
+
+            // Find the level
+            const allLevels = [...lumbosacralPlexusLevels.lumbar, ...lumbosacralPlexusLevels.sacral];
+            const level = allLevels.find(l => l.id === levelId);
+
+            if (!level) return;
+
+            // Select in cards
+            const card = document.querySelector(`#lumbosacral-content .level-card[data-level="${levelId}"]`);
+            if (card) card.classList.add('selected');
+
+            // Select in diagram
+            const diagramEl = document.querySelector(`#interactive-ls-plexus-svg .clickable[data-level="${levelId}"]`);
+            if (diagramEl) diagramEl.classList.add('selected');
+
+            showLSPlexusLevelDetail(level);
+            showLSLevelImages(level);
+        }
+
+        function showLSLevelImages(level) {
+            const viewer = document.getElementById('ls-image-viewer');
+            const title = document.getElementById('ls-image-viewer-title');
+            const content = document.getElementById('ls-image-viewer-content');
+
+            title.textContent = `${level.name} - Anatomical Diagrams`;
+
+            if (level.images && Object.keys(level.images).length > 0) {
+                content.innerHTML = '';
+
+                let index = 0;
+                for (const [key, img] of Object.entries(level.images)) {
+                    const container = document.createElement('div');
+                    container.className = 'diagram-image-container';
+                    container.id = `ls-img-container-${level.id}-${index}`;
+
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img.src;
+                    imgEl.alt = img.label;
+                    imgEl.onclick = function() { openLightbox(img.src, img.label); };
+                    imgEl.onerror = function() {
+                        container.innerHTML = createPlaceholder(img.src, img.label);
+                    };
+
+                    const labelEl = document.createElement('div');
+                    labelEl.className = 'diagram-image-label';
+                    labelEl.textContent = img.label;
+
+                    container.appendChild(imgEl);
+                    container.appendChild(labelEl);
+                    content.appendChild(container);
+                    index++;
+                }
+            } else {
+                content.innerHTML = `
+                    <div class="no-image-placeholder">
+                        <p>No specific diagrams configured for this level.</p>
+                        <p>Add images to <code>lumbosacral_images/</code> folder.</p>
+                    </div>
+                `;
+            }
+
+            viewer.classList.add('visible');
+        }
+
+        function closeLSImageViewer() {
+            const viewer = document.getElementById('ls-image-viewer');
+            if (viewer) viewer.classList.remove('visible');
+        }
+
+        function showLSPlexusLevelDetail(level) {
+            const panel = document.getElementById('detail-panel');
+            const info = document.getElementById('detail-info');
+
+            panel.classList.add('plexus-panel');
+
+            info.innerHTML = `
+                <div class="detail-title">${level.name}</div>
+                <div class="detail-subtitle">${level.type === 'lumbar' ? 'Lumbar Plexus (L1-L4)' : 'Sacral Plexus (L4-S3)'} • Roots: ${level.roots.join(', ')}</div>
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <div class="detail-label">Sensory NCS</div>
+                        <div class="ncs-list">
+                            ${level.sensoryNCS.length ? level.sensoryNCS.map(s => `<span class="sensory-badge">${s}</span>`).join('') : '<span style="color: var(--text-muted);">—</span>'}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Motor NCS</div>
+                        <div class="ncs-list">
+                            ${level.motorNCS.length ? level.motorNCS.map(m => `<span class="motor-badge">${m}</span>`).join('') : '<span style="color: var(--text-muted);">—</span>'}
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">EMG Muscles</div>
+                        <div class="ncs-list">
+                            ${level.emgMuscles.length ? level.emgMuscles.map(m => `<span class="emg-badge">${m}</span>`).join('') : '<span style="color: var(--text-muted);">—</span>'}
+                        </div>
+                    </div>
+                    <div class="detail-item full-width">
+                        <div class="detail-label">Clinical Findings</div>
+                        <div class="detail-value clinical">${level.clinical}</div>
+                    </div>
+                </div>
+            `;
+
+            panel.classList.add('visible');
+        }
+
         function setupEventListeners() {
             // Main tab switching
             document.querySelectorAll('.extremity-tab').forEach(tab => {
@@ -1640,19 +2271,32 @@
             document.getElementById('upper-content').classList.toggle('hidden', extremity !== 'upper');
             document.getElementById('lower-content').classList.toggle('hidden', extremity !== 'lower');
             document.getElementById('plexus-content').classList.toggle('hidden', extremity !== 'plexus');
+            document.getElementById('lumbosacral-content').classList.toggle('hidden', extremity !== 'lumbosacral');
 
             // Clear selection
             clearSelection();
             closeDetailPanel();
+            closeImageViewer();
+            closeLSImageViewer();
         }
 
         function switchSubtab(subtab) {
-            document.querySelectorAll('.sub-tab').forEach(tab => {
-                tab.classList.toggle('active', tab.dataset.subtab === subtab);
-            });
-
-            document.getElementById('levels-view').classList.toggle('hidden', subtab !== 'levels');
-            document.getElementById('guide-view').classList.toggle('hidden', subtab !== 'guide');
+            // Handle Brachial Plexus subtabs
+            if (subtab === 'levels' || subtab === 'guide') {
+                document.querySelectorAll('#plexus-content .sub-tab').forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.subtab === subtab);
+                });
+                document.getElementById('levels-view').classList.toggle('hidden', subtab !== 'levels');
+                document.getElementById('guide-view').classList.toggle('hidden', subtab !== 'guide');
+            }
+            // Handle Lumbosacral Plexus subtabs
+            if (subtab === 'ls-levels' || subtab === 'ls-guide') {
+                document.querySelectorAll('#lumbosacral-content .sub-tab').forEach(tab => {
+                    tab.classList.toggle('active', tab.dataset.subtab === subtab);
+                });
+                document.getElementById('ls-levels-view').classList.toggle('hidden', subtab !== 'ls-levels');
+                document.getElementById('ls-guide-view').classList.toggle('hidden', subtab !== 'ls-guide');
+            }
         }
 
         function handleItemClick(element) {
