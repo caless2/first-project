@@ -1708,21 +1708,32 @@
             title.textContent = `${level.name} - Anatomical Diagrams`;
 
             if (level.images && Object.keys(level.images).length > 0) {
-                let imagesHtml = '';
+                // Clear content first
+                content.innerHTML = '';
 
+                let index = 0;
                 for (const [key, img] of Object.entries(level.images)) {
-                    imagesHtml += `
-                        <div class="diagram-image-container">
-                            <img src="${img.src}"
-                                 alt="${img.label}"
-                                 onclick="openLightbox('${img.src}', '${img.label}')"
-                                 onerror="this.parentElement.innerHTML = createPlaceholder('${img.src}', '${img.label}')">
-                            <div class="diagram-image-label">${img.label}</div>
-                        </div>
-                    `;
-                }
+                    const container = document.createElement('div');
+                    container.className = 'diagram-image-container';
+                    container.id = `img-container-${level.id}-${index}`;
 
-                content.innerHTML = imagesHtml;
+                    const imgEl = document.createElement('img');
+                    imgEl.src = img.src;
+                    imgEl.alt = img.label;
+                    imgEl.onclick = function() { openLightbox(img.src, img.label); };
+                    imgEl.onerror = function() {
+                        container.innerHTML = createPlaceholder(img.src, img.label);
+                    };
+
+                    const labelEl = document.createElement('div');
+                    labelEl.className = 'diagram-image-label';
+                    labelEl.textContent = img.label;
+
+                    container.appendChild(imgEl);
+                    container.appendChild(labelEl);
+                    content.appendChild(container);
+                    index++;
+                }
             } else {
                 content.innerHTML = `
                     <div class="no-image-placeholder">
