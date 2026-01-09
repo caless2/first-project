@@ -709,6 +709,23 @@
             background: #2b6cb0;
         }
 
+        /* CIDP Criteria Tab Style */
+        .extremity-tab.criteria-tab.active {
+            background: #c53030;
+        }
+
+        .section-header.criteria-header {
+            background: #c53030;
+        }
+
+        .section-header.criteria-header-strong {
+            background: #2f855a;
+        }
+
+        .section-header.criteria-header-weak {
+            background: #b7791f;
+        }
+
         /* Normative Data Table Styles */
         .normative-table {
             width: 100%;
@@ -933,6 +950,7 @@
             <button class="extremity-tab plexus-tab" data-extremity="plexus">Brachial Plexus</button>
             <button class="extremity-tab plexus-tab" data-extremity="lumbosacral">Lumbosacral Plexus</button>
             <button class="extremity-tab data-tab" data-extremity="normative">Normative Data (AANEM)</button>
+            <button class="extremity-tab criteria-tab" data-extremity="cidp">CIDP Criteria</button>
         </div>
 
         <!-- Upper Extremity Content -->
@@ -1836,6 +1854,109 @@
                 <strong>Reference:</strong> Shan Chen, et al. AANEM Practice Topic. Muscle Nerve 2016;54: 371–377.
             </div>
         </div>
+
+        <!-- CIDP Criteria Section -->
+        <div id="cidp-content" class="hidden">
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header criteria-header">Typical CIDP Clinical Criteria</div>
+                <div class="section-content" style="max-height: none; overflow-x: auto;">
+                    <table class="normative-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Criteria</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nerve-col">Muscle weakness</td>
+                                <td>Progressive or relapsing, symmetric, proximal and distal muscle weakness of upper and lower limbs</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Sensory involvement</td>
+                                <td>Involvement of at least two limbs</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Duration</td>
+                                <td>Developing over at least 8 weeks</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Reflexes</td>
+                                <td>Absent or reduced tendon reflexes in all limbs</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header criteria-header-strong">Strongly Supportive of Demyelination - EDX Criteria</div>
+                <div class="section-content" style="max-height: none; overflow-x: auto;">
+                    <table class="normative-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Criterion</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nerve-col">Motor distal latency</td>
+                                <td>≥50% above ULN in two nerves (excluding median neuropathy at the wrist from carpal tunnel syndrome)</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Conduction velocity</td>
+                                <td>≥30% below LLN in two nerves</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">F-wave latency</td>
+                                <td>≥20% above ULN in two nerves (≥50% if distal CMAP &lt;80% of LLN)</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Absence of F-waves</td>
+                                <td>In two nerves (with distal CMAP amplitudes ≥20% of LLN) + ≥1 other demyelinating parameter in ≥1 other nerve</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Conduction block</td>
+                                <td>≥30% reduction proximal to distal CMAP amplitude excluding tibial nerve, distal CMAP ≥20% of LLN in two nerves, or in one nerve + ≥1 other demyelinating parameter (except absence of F-waves)</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Temporal dispersion</td>
+                                <td>&gt;30% increase in duration between proximal and distal CMAP (≥100% in tibial nerve) in ≥2 nerves</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Distal CMAP duration</td>
+                                <td>Prolongation in ≥1 nerve + ≥1 other demyelinating parameter in ≥1 other nerve</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header criteria-header-weak">Weakly Supportive of Demyelination - EDX Criteria</div>
+                <div class="section-content" style="max-height: none; overflow-x: auto;">
+                    <table class="normative-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%;">Criterion</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nerve-col">Weakly supportive of demyelination</td>
+                                <td>As in "strong supportive" but in only one nerve</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="reference-note">
+                <strong>Reference:</strong> Van den Bergh, P. Y., et al. (2021). European Academy of Neurology/Peripheral Nerve Society guideline on diagnosis and treatment of chronic inflammatory demyelinating polyradiculoneuropathy. Journal of the Peripheral Nervous System, 26(3), 242-268.
+            </div>
+        </div>
     </div>
 
     <!-- Detail Panel -->
@@ -2501,6 +2622,7 @@
             document.getElementById('plexus-content').classList.toggle('hidden', extremity !== 'plexus');
             document.getElementById('lumbosacral-content').classList.toggle('hidden', extremity !== 'lumbosacral');
             document.getElementById('normative-content').classList.toggle('hidden', extremity !== 'normative');
+            document.getElementById('cidp-content').classList.toggle('hidden', extremity !== 'cidp');
 
             // Clear selection
             clearSelection();
