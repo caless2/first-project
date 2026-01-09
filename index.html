@@ -700,6 +700,67 @@
             border-left: 4px solid #e53e3e;
         }
 
+        /* Normative Data Tab Style */
+        .extremity-tab.data-tab.active {
+            background: #2b6cb0;
+        }
+
+        .section-header.data-header {
+            background: #2b6cb0;
+        }
+
+        /* Normative Data Table Styles */
+        .normative-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        .normative-table th {
+            background: #2b6cb0;
+            color: white;
+            padding: 0.875rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+
+        .normative-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle;
+        }
+
+        .normative-table tr:hover {
+            background: #ebf8ff;
+        }
+
+        .normative-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .normative-table tr:nth-child(even):hover {
+            background: #ebf8ff;
+        }
+
+        .normative-table .nerve-col {
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .reference-note {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-top: 1rem;
+        }
+
         /* Image Viewer Styles */
         .image-viewer {
             background: var(--card-bg);
@@ -871,6 +932,7 @@
             <button class="extremity-tab" data-extremity="lower">Lower Extremity</button>
             <button class="extremity-tab plexus-tab" data-extremity="plexus">Brachial Plexus</button>
             <button class="extremity-tab plexus-tab" data-extremity="lumbosacral">Lumbosacral Plexus</button>
+            <button class="extremity-tab data-tab" data-extremity="normative">Normative Data (AANEM)</button>
         </div>
 
         <!-- Upper Extremity Content -->
@@ -1587,6 +1649,193 @@
                 </div>
             </div>
         </div>
+
+        <!-- Normative Data (AANEM) Section -->
+        <div id="normative-content" class="hidden">
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header data-header">Motor Nerve Reference Values</div>
+                <div class="section-content" style="max-height: none; overflow-x: auto;">
+                    <table class="normative-table">
+                        <thead>
+                            <tr>
+                                <th>Nerve</th>
+                                <th>Distal Latency (ms)</th>
+                                <th>Amplitude (mV)</th>
+                                <th>Conduction Velocity (m/s)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nerve-col">Median (APB) 8 cm</td>
+                                <td>≤ 4.5</td>
+                                <td>≥ 4.1</td>
+                                <td>≥ 49</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Ulnar (ADM) 8 cm</td>
+                                <td>≤ 3.7</td>
+                                <td>≥ 7.9</td>
+                                <td>≥ 52 (below elbow)<br>≥ 43 (across elbow)<br>≥ 50 (above elbow)</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Fibular/Peroneal (EDB) 8 cm</td>
+                                <td>≤ 6.5</td>
+                                <td>≥ 1.3</td>
+                                <td>≥ 38</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Tibial (AH) 8 cm</td>
+                                <td>≤ 6.1</td>
+                                <td>≥ 4.4</td>
+                                <td>≥ 39</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header data-header">Sensory Nerve Reference Values</div>
+                <div class="section-content" style="max-height: none; overflow-x: auto;">
+                    <table class="normative-table">
+                        <thead>
+                            <tr>
+                                <th>Nerve</th>
+                                <th>Onset Latency (ms)</th>
+                                <th>Peak Latency (ms)</th>
+                                <th>Amplitude - Onset to Peak (µV)</th>
+                                <th>Amplitude - Peak to Peak (µV)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nerve-col">Superficial Radial (10 cm)</td>
+                                <td>≤ 2.2</td>
+                                <td>≤ 2.8</td>
+                                <td>≥ 7</td>
+                                <td>≥ 11</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Median (wrist 14 cm)</td>
+                                <td>≤ 3.3</td>
+                                <td>≤ 4.0</td>
+                                <td>≥ 11</td>
+                                <td>≥ 13</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Median (palm 7 cm)</td>
+                                <td>≤ 1.6</td>
+                                <td>≤ 2.3</td>
+                                <td>≥ 6</td>
+                                <td>≥ 8</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Ulnar (fifth digit, 14 cm)</td>
+                                <td>≤ 3.1</td>
+                                <td>≤ 4.0</td>
+                                <td>≥ 10</td>
+                                <td>≥ 9</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">MABC (10 cm)</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>≥ 2.6</td>
+                                <td>≥ 4</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">LABC (10 cm)</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>≥ 2.5</td>
+                                <td>≥ 5</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Sural (14 cm)</td>
+                                <td>≤ 3.6</td>
+                                <td>≤ 4.5</td>
+                                <td>≥ 4</td>
+                                <td>≥ 4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header data-header">Acceptable Amplitude/CV Drop</div>
+                <div class="section-content" style="max-height: none; overflow-x: auto;">
+                    <table class="normative-table">
+                        <thead>
+                            <tr>
+                                <th>Nerve</th>
+                                <th>Site</th>
+                                <th>Amp Drop</th>
+                                <th>CV Drop</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nerve-col">Ulnar Motor</td>
+                                <td>Across Elbow</td>
+                                <td>—</td>
+                                <td>≤ 15 m/s or 23%</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Fibular Motor</td>
+                                <td>Ankle to below fibular head</td>
+                                <td>≤ 32%</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Fibular Motor</td>
+                                <td>Across fibular head</td>
+                                <td>≤ 25%</td>
+                                <td>≤ 6 m/s or 12%</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Tibial Motor</td>
+                                <td>Ankle to knee</td>
+                                <td>≤ 10.3 mV or 71%</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="section" style="margin-bottom: 1.5rem;">
+                <div class="section-header data-header">Median-Ulnar Latency Differences</div>
+                <div class="section-content" style="max-height: none; overflow-x: auto;">
+                    <table class="normative-table">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Maximum Difference (ms)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="nerve-col">Sensory (14 cm) - Onset</td>
+                                <td>≤ 0.5</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Sensory (14 cm) - Peak</td>
+                                <td>≤ 0.4</td>
+                            </tr>
+                            <tr>
+                                <td class="nerve-col">Motor (8 cm)</td>
+                                <td>≤ 1.5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="reference-note">
+                <strong>Reference:</strong> Shan Chen, et al. AANEM Practice Topic. Muscle Nerve 2016;54: 371–377.
+            </div>
+        </div>
     </div>
 
     <!-- Detail Panel -->
@@ -2251,6 +2500,7 @@
             document.getElementById('lower-content').classList.toggle('hidden', extremity !== 'lower');
             document.getElementById('plexus-content').classList.toggle('hidden', extremity !== 'plexus');
             document.getElementById('lumbosacral-content').classList.toggle('hidden', extremity !== 'lumbosacral');
+            document.getElementById('normative-content').classList.toggle('hidden', extremity !== 'normative');
 
             // Clear selection
             clearSelection();
