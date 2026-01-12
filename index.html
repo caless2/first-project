@@ -198,6 +198,12 @@
             margin-right: 0.25rem;
         }
 
+        .root-badge.primary {
+            background: #1a365d;
+            font-weight: 800;
+            box-shadow: 0 0 0 2px #2b6cb0;
+        }
+
         .nerve-badge {
             display: inline-block;
             background: var(--success);
@@ -1961,40 +1967,30 @@
         const neuroanatomyData = {
             upper: {
                 muscles: [
-                    { name: "Deltoid", nerve: "Axillary", roots: ["C5", "C6"], plexus: "Posterior cord" },
-                    { name: "Biceps Brachii", nerve: "Musculocutaneous", roots: ["C5", "C6"], plexus: "Lateral cord" },
-                    { name: "Brachialis", nerve: "Musculocutaneous", roots: ["C5", "C6"], plexus: "Lateral cord" },
-                    { name: "Brachioradialis", nerve: "Radial", roots: ["C5", "C6"], plexus: "Posterior cord" },
-                    { name: "Triceps Brachii", nerve: "Radial", roots: ["C6", "C7", "C8"], plexus: "Posterior cord" },
-                    { name: "Extensor Carpi Radialis Longus", nerve: "Radial", roots: ["C6", "C7"], plexus: "Posterior cord" },
-                    { name: "Extensor Carpi Radialis Brevis", nerve: "Radial (PIN)", roots: ["C7", "C8"], plexus: "Posterior cord" },
-                    { name: "Extensor Digitorum Communis", nerve: "Radial (PIN)", roots: ["C7", "C8"], plexus: "Posterior cord" },
-                    { name: "Extensor Carpi Ulnaris", nerve: "Radial (PIN)", roots: ["C7", "C8"], plexus: "Posterior cord" },
-                    { name: "Supinator", nerve: "Radial (PIN)", roots: ["C5", "C6"], plexus: "Posterior cord" },
-                    { name: "Pronator Teres", nerve: "Median", roots: ["C6", "C7"], plexus: "Lateral cord → Median" },
-                    { name: "Flexor Carpi Radialis", nerve: "Median", roots: ["C6", "C7"], plexus: "Lateral cord → Median" },
-                    { name: "Flexor Digitorum Superficialis", nerve: "Median", roots: ["C7", "C8", "T1"], plexus: "Medial & Lateral cords → Median" },
-                    { name: "Flexor Pollicis Longus", nerve: "Median (AIN)", roots: ["C7", "C8"], plexus: "Medial & Lateral cords → Median" },
-                    { name: "Flexor Digitorum Profundus I-II", nerve: "Median (AIN)", roots: ["C7", "C8"], plexus: "Medial & Lateral cords → Median" },
-                    { name: "Pronator Quadratus", nerve: "Median (AIN)", roots: ["C7", "C8"], plexus: "Medial & Lateral cords → Median" },
-                    { name: "Abductor Pollicis Brevis", nerve: "Median", roots: ["C8", "T1"], plexus: "Medial cord → Median" },
-                    { name: "Opponens Pollicis", nerve: "Median", roots: ["C8", "T1"], plexus: "Medial cord → Median" },
-                    { name: "Lumbricals I-II", nerve: "Median", roots: ["C8", "T1"], plexus: "Medial cord → Median" },
-                    { name: "Flexor Carpi Ulnaris", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
-                    { name: "Flexor Digitorum Profundus III-IV", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
-                    { name: "First Dorsal Interosseous", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
-                    { name: "Abductor Digiti Minimi (Hand)", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
-                    { name: "Adductor Pollicis", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
-                    { name: "Lumbricals III-IV", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
-                    { name: "Interossei (Palmar & Dorsal)", nerve: "Ulnar", roots: ["C8", "T1"], plexus: "Medial cord" },
-                    { name: "Supraspinatus", nerve: "Suprascapular", roots: ["C5", "C6"], plexus: "Upper trunk" },
-                    { name: "Infraspinatus", nerve: "Suprascapular", roots: ["C5", "C6"], plexus: "Upper trunk" },
-                    { name: "Rhomboids", nerve: "Dorsal Scapular", roots: ["C5"], plexus: "Root (C5)" },
-                    { name: "Serratus Anterior", nerve: "Long Thoracic", roots: ["C5", "C6", "C7"], plexus: "Roots (C5-C7)" },
-                    { name: "Latissimus Dorsi", nerve: "Thoracodorsal", roots: ["C6", "C7", "C8"], plexus: "Posterior cord" },
-                    { name: "Teres Major", nerve: "Subscapular (Lower)", roots: ["C5", "C6"], plexus: "Posterior cord" },
-                    { name: "Pectoralis Major (Clavicular)", nerve: "Lateral Pectoral", roots: ["C5", "C6", "C7"], plexus: "Lateral cord" },
-                    { name: "Pectoralis Major (Sternal)", nerve: "Medial Pectoral", roots: ["C8", "T1"], plexus: "Medial cord" }
+                    { name: "Supraspinatus", nerve: "Suprascapular", roots: ["*C5", "C6"], plexus: "Upper trunk" },
+                    { name: "Infraspinatus", nerve: "Suprascapular", roots: ["*C5", "C6"], plexus: "Upper trunk" },
+                    { name: "Deltoid", nerve: "Axillary", roots: ["*C5", "C6"], plexus: "Posterior cord" },
+                    { name: "Biceps Brachii", nerve: "Musculocutaneous", roots: ["*C5", "C6"], plexus: "Lateral cord" },
+                    { name: "Brachioradialis", nerve: "Radial", roots: ["*C5", "C6"], plexus: "Posterior cord" },
+                    { name: "Serratus Anterior", nerve: "Long Thoracic", roots: ["C5", "*C6", "C7"], plexus: "Roots (C5-C7)" },
+                    { name: "Pectoralis Major (Clavicular)", nerve: "Lateral Pectoral", roots: ["C5", "*C6", "C7"], plexus: "Lateral cord" },
+                    { name: "Pectoralis Major (Sternal)", nerve: "Medial Pectoral", roots: ["C6", "*C7", "C8", "T1"], plexus: "Medial cord" },
+                    { name: "Flexor Carpi Radialis", nerve: "Median", roots: ["*C6", "C7"], plexus: "Lateral cord → Median" },
+                    { name: "Pronator Teres", nerve: "Median", roots: ["*C6", "C7"], plexus: "Lateral cord → Median" },
+                    { name: "Extensor Carpi Radialis Longus", nerve: "Radial", roots: ["*C6", "C7"], plexus: "Posterior cord" },
+                    { name: "Latissimus Dorsi", nerve: "Thoracodorsal", roots: ["*C6", "C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Triceps Brachii", nerve: "Radial", roots: ["C6", "*C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Anconeus", nerve: "Radial", roots: ["C6", "*C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Extensor Digitorum Communis", nerve: "Radial (PIN)", roots: ["*C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Flexor Digitorum Superficialis", nerve: "Median", roots: ["*C7", "C8"], plexus: "Medial & Lateral cords → Median" },
+                    { name: "Extensor Indicis Proprius", nerve: "Radial (PIN)", roots: ["*C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Extensor Carpi Ulnaris", nerve: "Radial (PIN)", roots: ["*C7", "C8"], plexus: "Posterior cord" },
+                    { name: "Flexor Pollicis Longus", nerve: "Median (AIN)", roots: ["C7", "*C8", "T1"], plexus: "Medial & Lateral cords → Median" },
+                    { name: "Flexor Digitorum Profundus", nerve: "Median/Ulnar", roots: ["C7", "*C8", "T1"], plexus: "Medial & Lateral cords" },
+                    { name: "Flexor Carpi Ulnaris", nerve: "Ulnar", roots: ["*C8", "T1"], plexus: "Medial cord" },
+                    { name: "First Dorsal Interosseous", nerve: "Ulnar", roots: ["*C8", "T1"], plexus: "Medial cord" },
+                    { name: "Abductor Digiti Minimi (Hand)", nerve: "Ulnar", roots: ["*C8", "T1"], plexus: "Medial cord" },
+                    { name: "Abductor Pollicis Brevis", nerve: "Median", roots: ["*C8", "T1"], plexus: "Medial cord → Median" }
                 ],
                 nerves: [
                     { name: "Median Nerve", roots: ["C6", "C7", "C8", "T1"], plexus: "C5-C7 → Upper/Middle trunks → Lateral cord + C8-T1 → Lower trunk → Medial cord → join to form Median nerve", muscles: ["Pronator Teres", "Flexor Carpi Radialis", "Flexor Digitorum Superficialis", "Flexor Pollicis Longus", "Flexor Digitorum Profundus I-II", "Pronator Quadratus", "Abductor Pollicis Brevis", "Opponens Pollicis", "Lumbricals I-II"] },
@@ -2012,34 +2008,28 @@
             },
             lower: {
                 muscles: [
-                    { name: "Iliopsoas", nerve: "Femoral + Direct branches", roots: ["L1", "L2", "L3"], plexus: "Lumbar plexus" },
-                    { name: "Quadriceps Femoris", nerve: "Femoral", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus (posterior divisions)" },
-                    { name: "Sartorius", nerve: "Femoral", roots: ["L2", "L3"], plexus: "Lumbar plexus" },
-                    { name: "Adductor Longus", nerve: "Obturator", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus (anterior divisions)" },
-                    { name: "Adductor Magnus (Anterior)", nerve: "Obturator", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus" },
-                    { name: "Adductor Magnus (Posterior)", nerve: "Sciatic (Tibial portion)", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
-                    { name: "Gracilis", nerve: "Obturator", roots: ["L2", "L3"], plexus: "Lumbar plexus" },
-                    { name: "Gluteus Maximus", nerve: "Inferior Gluteal", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
-                    { name: "Gluteus Medius", nerve: "Superior Gluteal", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
-                    { name: "Gluteus Minimus", nerve: "Superior Gluteal", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
-                    { name: "Tensor Fasciae Latae", nerve: "Superior Gluteal", roots: ["L4", "L5", "S1"], plexus: "Sacral plexus" },
-                    { name: "Biceps Femoris (Long Head)", nerve: "Sciatic (Tibial portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
-                    { name: "Biceps Femoris (Short Head)", nerve: "Sciatic (Peroneal portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
-                    { name: "Semitendinosus", nerve: "Sciatic (Tibial portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
-                    { name: "Semimembranosus", nerve: "Sciatic (Tibial portion)", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus" },
-                    { name: "Gastrocnemius", nerve: "Tibial", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
-                    { name: "Soleus", nerve: "Tibial", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
-                    { name: "Tibialis Posterior", nerve: "Tibial", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Tibial" },
-                    { name: "Flexor Digitorum Longus", nerve: "Tibial", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Tibial" },
-                    { name: "Flexor Hallucis Longus", nerve: "Tibial", roots: ["L5", "S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
-                    { name: "Abductor Hallucis", nerve: "Tibial (Medial Plantar)", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
-                    { name: "Abductor Digiti Minimi (Foot)", nerve: "Tibial (Lateral Plantar)", roots: ["S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
-                    { name: "Tibialis Anterior", nerve: "Deep Peroneal", roots: ["L4", "L5"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
-                    { name: "Extensor Hallucis Longus", nerve: "Deep Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
-                    { name: "Extensor Digitorum Longus", nerve: "Deep Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
-                    { name: "Extensor Digitorum Brevis", nerve: "Deep Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
-                    { name: "Peroneus Longus", nerve: "Superficial Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal" },
-                    { name: "Peroneus Brevis", nerve: "Superficial Peroneal", roots: ["L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal" }
+                    { name: "Rectus Femoris", nerve: "Femoral", roots: ["L2", "*L3", "L4"], plexus: "Lumbar plexus" },
+                    { name: "Vastus Lateralis", nerve: "Femoral", roots: ["L2", "*L3", "L4"], plexus: "Lumbar plexus" },
+                    { name: "Vastus Medialis", nerve: "Femoral", roots: ["L2", "*L3", "L4"], plexus: "Lumbar plexus" },
+                    { name: "Adductors", nerve: "Obturator", roots: ["L2", "*L3", "L4"], plexus: "Lumbar plexus (anterior divisions)" },
+                    { name: "Tibialis Anterior", nerve: "Deep Peroneal", roots: ["*L4", "L5"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Extensor Digitorum Longus", nerve: "Deep Peroneal", roots: ["*L4", "L5"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Extensor Hallucis Longus", nerve: "Deep Peroneal", roots: ["L4", "*L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Extensor Digitorum Brevis", nerve: "Deep Peroneal", roots: ["L4", "*L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Deep Peroneal" },
+                    { name: "Medial Hamstrings", nerve: "Sciatic", roots: ["L4", "*L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Gluteus Medius", nerve: "Superior Gluteal", roots: ["L4", "*L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Tensor Fasciae Latae", nerve: "Superior Gluteal", roots: ["L4", "*L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Tibialis Posterior", nerve: "Tibial", roots: ["*L5", "S1"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Flexor Digitorum Longus", nerve: "Tibial", roots: ["*L5", "S1"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Peroneus Longus", nerve: "Superficial Peroneal", roots: ["*L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal" },
+                    { name: "Peroneus Brevis", nerve: "Superficial Peroneal", roots: ["*L5", "S1"], plexus: "Sacral plexus → Sciatic → Common Peroneal → Superficial Peroneal" },
+                    { name: "Lateral Hamstrings (Biceps Femoris)", nerve: "Sciatic", roots: ["*L5", "S1"], plexus: "Sacral plexus" },
+                    { name: "Gastrocnemius (Lateral)", nerve: "Tibial", roots: ["L5", "*S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Gluteus Maximus", nerve: "Inferior Gluteal", roots: ["L5", "*S1", "S2"], plexus: "Sacral plexus" },
+                    { name: "Abductor Hallucis Brevis", nerve: "Tibial (Medial Plantar)", roots: ["L5", "*S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Abductor Digiti Quinti Pedis", nerve: "Tibial (Lateral Plantar)", roots: ["*S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Gastrocnemius (Medial)", nerve: "Tibial", roots: ["*S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" },
+                    { name: "Soleus", nerve: "Tibial", roots: ["*S1", "S2"], plexus: "Sacral plexus → Sciatic → Tibial" }
                 ],
                 nerves: [
                     { name: "Femoral Nerve", roots: ["L2", "L3", "L4"], plexus: "Lumbar plexus (posterior divisions of L2-L4)", muscles: ["Iliopsoas", "Quadriceps Femoris", "Sartorius"] },
@@ -2328,7 +2318,11 @@
                     <div class="item-name">${muscle.name}</div>
                     <div class="item-details">
                         <span class="nerve-badge">${muscle.nerve}</span>
-                        ${muscle.roots.map(r => `<span class="root-badge">${r}</span>`).join('')}
+                        ${muscle.roots.map(r => {
+                            const isPrimary = r.startsWith('*');
+                            const rootName = isPrimary ? r.substring(1) : r;
+                            return `<span class="root-badge${isPrimary ? ' primary' : ''}">${rootName}</span>`;
+                        }).join('')}
                     </div>
                 </div>
             `).join('');
